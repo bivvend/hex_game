@@ -14,15 +14,36 @@ namespace Scripts
 
         public GameObject baseTilePrefab;
 
+
+        public int mapRadius;
+
         // Start is called before the first frame update
         void Start()
         {
-            GameObject tile = new GameObject("HexTile");
-            tile.AddComponent<HexTile>();
-            HexTile t = tile.GetComponent<HexTile>();
-            t.tileSpritePrefab = baseTilePrefab;
-            //Instantiate(tile);
-            tiles.Add(tile);
+            //Create a circular map of given radius
+            for (int q = (-1* (mapRadius +1)); q <= (mapRadius + 1); q++)
+            {
+                for (int r = (-1 * (mapRadius + 1)); r <= (mapRadius + 1); r++)
+                {
+                    for (int s = (-1 * (mapRadius + 1)); s <= (mapRadius + 1); s++)
+                    {
+                        if (s == -q - r)
+                        {
+                            GameObject tile = new GameObject("HexTile");
+                            tile.AddComponent<HexTile>();
+                            HexTile t = tile.GetComponent<HexTile>();
+                            t.tileSpritePrefab = baseTilePrefab;
+                            t.qIndex = q;
+                            t.rIndex = r;
+                            t.sIndex = s;
+                            tiles.Add(tile);
+                        }
+                    }
+
+                }
+            }
+            
+           
         }
 
         // Update is called once per frame
