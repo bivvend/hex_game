@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
+
 namespace Scripts.Tiles
 {
     public class HexTile : MonoBehaviour
@@ -12,7 +13,7 @@ namespace Scripts.Tiles
 
         //Rendering coords for unity
         [HideInInspector]
-        public float renderPosX = 0.0f;
+        public float renderPosX { get; set; } = 0.0f;
         [HideInInspector]
         public float renderPosY = 0.0f;
 
@@ -25,6 +26,18 @@ namespace Scripts.Tiles
         public int rIndex = 0;
         [HideInInspector]
         public int sIndex = 0;
+
+
+        //Tile data
+        //Terrain
+        [HideInInspector]
+        public TerrainType TerrainType = TerrainType.Grass;
+        //List of 6 utility types one for each side
+        [HideInInspector]
+        public List<UtilityType> Developments = new();
+
+        [HideInInspector]
+        public OwnerType owner = OwnerType.Good;
 
         // Start is called before the first frame update
         void Start()
