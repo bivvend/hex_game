@@ -17,7 +17,8 @@ namespace Scripts.Tiles
         Mountains = 1,
         Hills = 2,
         Swamp = 3,
-        Water = 4
+        Water = 4,
+        Forest = 5,
     }
 
     //Development overlay (from cards). There are 6 of these per hex

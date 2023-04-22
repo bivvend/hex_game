@@ -4,6 +4,7 @@ using UnityEngine;
 using Scripts.Tiles;
 using Unity.VisualScripting;
 using UnityEngine.Tilemaps;
+using UnityEngine.U2D.Animation;
 
 namespace Scripts
 {
@@ -13,13 +14,13 @@ namespace Scripts
         public List<GameObject> tiles = new List<GameObject>();
 
         public GameObject baseTilePrefab;
-
-
+        public GameObject edgePrefab;
         public int mapRadius;
 
         // Start is called before the first frame update
         void Start()
         {
+
             //Create a circular map of given radius
             for (int q = (-1* (mapRadius +1)); q <= (mapRadius + 1); q++)
             {
@@ -33,6 +34,8 @@ namespace Scripts
                             tile.AddComponent<HexTile>();
                             HexTile t = tile.GetComponent<HexTile>();
                             t.tileSpritePrefab = baseTilePrefab;
+                            t.edgeSpritePrefab = edgePrefab;
+                            t.TerrainType = TerrainType.Forest;
                             t.qIndex = q;
                             t.rIndex = r;
                             t.sIndex = s;
