@@ -19,6 +19,8 @@ namespace Scripts.Tiles
         private GameObject _tileSprite;
         private GameObject _edgeSprite;
 
+        public BoardController boardController;
+
         //Rendering coords for unity
         [HideInInspector]
         public float renderPosX { get; set; } = 0.0f;
@@ -102,7 +104,10 @@ namespace Scripts.Tiles
             renderPosY = (_size / 2.0f) * pos.Y;
 
             _tileSprite = Instantiate(tileSpritePrefab, new Vector3(renderPosX, renderPosY, 0), Quaternion.identity);
+            //Pass the parent to the sprite prefab to allow click event bubbling up.
+            _tileSprite.transform.parent = gameObject.transform;
             _edgeSprite = Instantiate(edgeSpritePrefab, new Vector3(renderPosX, renderPosY, -0.01f), Quaternion.identity);
+            _edgeSprite.transform.parent = gameObject.transform;
 
         }
 
@@ -123,6 +128,14 @@ namespace Scripts.Tiles
 
                 _selectionStatusChanged = false;
             }
+        }
+
+        [HideInInspector]    
+        public void Clicked()
+        {
+            Debug.Log("Click from child!");
+            boardController.ClickedTile(this);
+
         }
     }
 }

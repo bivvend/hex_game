@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3944307451988335795}
   - component: {fileID: -3915978068651827486}
   - component: {fileID: -2193878720612027024}
+  - component: {fileID: -4265962311675263287}
+  - component: {fileID: -9184445908697675124}
   m_Layer: 0
   m_Name: SingleTilePrefab
   m_TagString: Untagged
@@ -48,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CategoryHash: 0
   m_labelHash: 0
-  m_SpriteKey: 2.1125634e-33
+  m_SpriteKey: 3.289872e-29
 --- !u!114 &-3915978068651827486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,3 +117,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4265962311675263287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6924935715177847158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebd352e3bd4cc04fa26fe1f6bda5f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &-9184445908697675124
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6924935715177847158}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.28

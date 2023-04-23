@@ -5,6 +5,7 @@ using Scripts.Tiles;
 using Unity.VisualScripting;
 using UnityEngine.Tilemaps;
 using UnityEngine.U2D.Animation;
+using UnityEngine.WSA;
 
 namespace Scripts
 {
@@ -35,6 +36,7 @@ namespace Scripts
                             HexTile t = tile.GetComponent<HexTile>();
                             t.tileSpritePrefab = baseTilePrefab;
                             t.edgeSpritePrefab = edgePrefab;
+                            t.boardController = this;
                             t.TerrainType = TerrainType.Forest;
                             t.qIndex = q;
                             t.rIndex = r;
@@ -53,7 +55,28 @@ namespace Scripts
         // Update is called once per frame
         void Update()
         {
-            tiles[0].GetComponent<HexTile>().ChangeSelectionStatus(true);
+            //tiles[0].GetComponent<HexTile>().ChangeSelectionStatus(true);
+        }
+
+
+        public void ClickedTile(HexTile hexTile)
+        {
+            Debug.Log($"{hexTile.qIndex},{hexTile.rIndex},{hexTile.sIndex}");
+            //Go through all tiles and deselect rest
+            tiles.ForEach((t) =>
+            {
+                HexTile tFound = t.GetComponent<HexTile>();
+                if (tFound.qIndex == hexTile.qIndex && tFound.rIndex == hexTile.rIndex && tFound.sIndex == hexTile.sIndex)
+                {
+                    tFound.ChangeSelectionStatus(true);
+                }
+                else
+                {
+                    tFound.ChangeSelectionStatus(false);
+                }
+
+            });
+
         }
     }
 }
