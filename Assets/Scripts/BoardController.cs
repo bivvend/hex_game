@@ -45,14 +45,15 @@ namespace Scripts
 
                 }
             }
+
             
-           
+
         }
 
         // Update is called once per frame
         void Update()
         {
-
+            tiles[0].GetComponent<HexTile>().ChangeSelectionStatus(true);
         }
     }
 }

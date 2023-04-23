@@ -8,10 +8,16 @@ namespace Scripts.Tiles
 {
     public class HexTile : MonoBehaviour
     {
-
+        //Game objects
+        //Sprite resolvers allolw swapping sprite at runtime
         public SpriteResolver spriteResolver;
+        public SpriteResolver edgeResolver;
+        //Prefabs from editor
         public GameObject tileSpritePrefab;
         public GameObject edgeSpritePrefab;
+
+        private GameObject _tileSprite;
+        private GameObject _edgeSprite;
 
         //Rendering coords for unity
         [HideInInspector]
@@ -19,7 +25,7 @@ namespace Scripts.Tiles
         [HideInInspector]
         public float renderPosY = 0.0f;
 
-        private float _size = 1.35f; //Width of flat top 
+        private float _size = 2.8f; //Width of flat top 
 
         //Indicies in cube coords
         [HideInInspector]
@@ -40,10 +46,20 @@ namespace Scripts.Tiles
         [HideInInspector]
         public OwnerType owner = OwnerType.Good;
 
+        //Variables used to select sprite 
         private string _terrainCategory;
         private string _spriteName;
         private int _terrainVariant;
 
+        public bool isSelected = false;
+        private bool _selectionStatusChanged = false;
+
+        public void ChangeSelectionStatus(bool statusIn)
+        {
+            isSelected = statusIn;
+            _selectionStatusChanged = true;
+
+        }
         // Start is called before the first frame update
         void Start()
         {
@@ -74,21 +90,39 @@ namespace Scripts.Tiles
             _spriteName = _terrainCategory + _terrainVariant.ToString();
 
 
-            //Get the sprite resolver from the prefab
+            //Get the sprite resolvers from the prefabs
             spriteResolver = tileSpritePrefab.GetComponent<SpriteResolver>();
             spriteResolver.SetCategoryAndLabel(_terrainCategory, _spriteName);
+
+            edgeResolver = edgeSpritePrefab.GetComponent<SpriteResolver>();
+            edgeResolver.SetCategoryAndLabel("Selectors", "Black");
+
             PointF pos = TIleUtilities.convertHexIndiciesToCartesianFlatTop(qIndex, rIndex);
             renderPosX = (_size / 2.0f) * pos.X;
             renderPosY = (_size / 2.0f) * pos.Y;
 
-            Instantiate(tileSpritePrefab, new Vector3(renderPosX, renderPosY, 0), Quaternion.identity);
-            Instantiate(edgeSpritePrefab, new Vector3(renderPosX, renderPosY, -0.01f), Quaternion.identity);
+            _tileSprite = Instantiate(tileSpritePrefab, new Vector3(renderPosX, renderPosY, 0), Quaternion.identity);
+            _edgeSprite = Instantiate(edgeSpritePrefab, new Vector3(renderPosX, renderPosY, -0.01f), Quaternion.identity);
+
         }
 
         // Update is called once per frame
         void Update()
         {
+            if(_selectionStatusChanged)
+            {
+                if(isSelected)
+                {
+                    _edgeSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel("Selectors", "Yellow");
+                }
+                else
+                {
+                    _edgeSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel("Selectors", "Black");
+                }
+                
 
+                _selectionStatusChanged = false;
+            }
         }
     }
 }
