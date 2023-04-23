@@ -6,6 +6,8 @@ using Unity.VisualScripting;
 using UnityEngine.Tilemaps;
 using UnityEngine.U2D.Animation;
 using UnityEngine.WSA;
+using Unity.VisualScripting.Antlr3.Runtime;
+using System;
 
 namespace Scripts
 {
@@ -18,16 +20,22 @@ namespace Scripts
         public GameObject edgePrefab;
         public int mapRadius;
 
+
+
         // Start is called before the first frame update
         void Start()
         {
+            Array values = Enum.GetValues(typeof(TerrainType));
+            System.Random random = new System.Random();
+
+            
 
             //Create a circular map of given radius
-            for (int q = (-1* (mapRadius +1)); q <= (mapRadius + 1); q++)
+            for (int q = (-1* (mapRadius +2)); q <= (mapRadius + 2); q++)
             {
-                for (int r = (-1 * (mapRadius + 1)); r <= (mapRadius + 1); r++)
+                for (int r = (-1 * (mapRadius + 2)); r <= (mapRadius + 2); r++)
                 {
-                    for (int s = (-1 * (mapRadius + 1)); s <= (mapRadius + 1); s++)
+                    for (int s = (-1 * (mapRadius + 2)); s <= (mapRadius + 2); s++)
                     {
                         if (s == -q - r)
                         {
@@ -37,7 +45,27 @@ namespace Scripts
                             t.tileSpritePrefab = baseTilePrefab;
                             t.edgeSpritePrefab = edgePrefab;
                             t.boardController = this;
-                            t.TerrainType = TerrainType.Forest;
+
+                            TerrainType randomType = (TerrainType)values.GetValue(random.Next(values.Length));
+                            if(randomType == TerrainType.Water)
+                            {
+                                randomType = TerrainType.Grass;
+                            }    
+
+                            if(Math.Abs(q) == mapRadius + 2 || Math.Abs(r) == mapRadius + 2 || Math.Abs(s) == mapRadius + 2)
+                            {
+                                randomType = TerrainType.Water;
+                            }
+                            if (Math.Abs(q) == mapRadius + 1 || Math.Abs(r) == mapRadius + 1|| Math.Abs(s) == mapRadius + 1)
+                            {
+                                //Make a rough coast
+                                if (random.Next(0, 2) > 0)
+                                {
+                                    randomType = TerrainType.Water;
+                                }
+                            }
+
+                            t.TerrainType = randomType;
                             t.qIndex = q;
                             t.rIndex = r;
                             t.sIndex = s;
@@ -55,7 +83,7 @@ namespace Scripts
         // Update is called once per frame
         void Update()
         {
-            //tiles[0].GetComponent<HexTile>().ChangeSelectionStatus(true);
+            
         }
 
 
