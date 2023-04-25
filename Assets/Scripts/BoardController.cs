@@ -89,6 +89,9 @@ namespace Scripts
 
         public void ClickedTile(HexTile hexTile)
         {
+            //This looks at current game state to determine the role of the click
+            
+            
             Debug.Log($"{hexTile.qIndex},{hexTile.rIndex},{hexTile.sIndex}");
             //Go through all tiles and deselect rest
             tiles.ForEach((t) =>
@@ -97,10 +100,62 @@ namespace Scripts
                 if (tFound.qIndex == hexTile.qIndex && tFound.rIndex == hexTile.rIndex && tFound.sIndex == hexTile.sIndex)
                 {
                     tFound.ChangeSelectionStatus(true);
+
+
                 }
                 else
                 {
                     tFound.ChangeSelectionStatus(false);
+                }
+
+            });
+
+            HighlightNeighbours(hexTile, HighlightColor.Green);
+
+        }
+
+        /// <summary>
+        /// Highlights all the neigbours 
+        /// </summary>
+        /// <param name="hexTile"></param>
+        public void HighlightNeighbours(HexTile hexTile, HighlightColor colour)
+        {
+            //Get a list of all possible indicies for neighbours
+            List<(int, int, int)> neighbours = TIleUtilities.GetNeighbours(hexTile.qIndex, hexTile.rIndex);
+
+            //Highlight all these tiles
+            bool found = false;
+            tiles.ForEach((t) =>
+            {
+                var tile = t.GetComponent<HexTile>();
+                found = false;
+                neighbours.ForEach((tN) =>
+                {
+                    if(tN.Item1 == tile.qIndex && tN.Item2 == tile.rIndex && tN.Item3 == tile.sIndex)
+                    {
+                        found = true;
+                    }
+                });
+                if(found)
+                {
+                    switch(colour)
+                    {
+                        case HighlightColor.Green:
+                            tile.ChangeHighlightGreenStatus(true);
+                            break;
+
+                        case HighlightColor.Red:
+                            tile.ChangeHighlightRedStatus(true);
+                            break;
+
+                    }
+                    
+                }
+                else
+                {
+                    tile.ChangeHighlightGreenStatus(false);
+                    tile.ChangeHighlightRedStatus(false);
+
                 }
 
             });

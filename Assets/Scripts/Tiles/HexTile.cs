@@ -43,7 +43,7 @@ namespace Scripts.Tiles
         public TerrainType TerrainType;
         //List of 6 utility types one for each side
         [HideInInspector]
-        public List<UtilityType> Developments = new();
+        public List<UtilityType> Developments { get; private set; } = new();
 
         [HideInInspector]
         public OwnerType owner = OwnerType.Good;
@@ -53,15 +53,32 @@ namespace Scripts.Tiles
         private string _spriteName;
         private int _terrainVariant;
 
-        public bool isSelected = false;
+        //Selection statuses - only set via methods.
+        public bool isSelected { get; private set; } = false;
+        public bool isHighlightedGreen { get; private set; } = false;
+        public bool isHighlightedRed { get; private set; } = false;
         private bool _selectionStatusChanged = false;
+
 
         public void ChangeSelectionStatus(bool statusIn)
         {
             isSelected = statusIn;
             _selectionStatusChanged = true;
-
         }
+
+        public void ChangeHighlightGreenStatus(bool statusIn)
+        {
+            isHighlightedGreen = statusIn;
+            _selectionStatusChanged = true;
+        }
+
+
+        public void ChangeHighlightRedStatus(bool statusIn)
+        {
+            isHighlightedRed = statusIn;
+            _selectionStatusChanged = true;
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -119,6 +136,14 @@ namespace Scripts.Tiles
                 if(isSelected)
                 {
                     _edgeSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel("Selectors", "Yellow");
+                }
+                else if (isHighlightedGreen)
+                {
+                    _edgeSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel("Selectors", "Green");
+                }
+                else if (isHighlightedRed)
+                {
+                    _edgeSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel("Selectors", "Red");
                 }
                 else
                 {

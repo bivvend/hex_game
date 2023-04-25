@@ -39,5 +39,22 @@ namespace Scripts.Tiles
     }
 
 
+    public enum HighlightColor
+    {
+        Green = 0,
+        Red = 1
+    }
+
+    /// <summary>
+    /// Method used to find a set of connected tiles by type
+    /// </summary>
+    public enum SearchStrategy
+    {
+        Terrain = 0,
+        Owner = 1,
+        DevelopmentType = 2
+    }
+
+
     
 }
