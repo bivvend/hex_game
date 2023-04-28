@@ -435,7 +435,7 @@ MonoBehaviour:
   tiles: []
   baseTilePrefab: {fileID: 6924935715177847158, guid: 18689233625fa9647aa52e38578c7c52, type: 3}
   edgePrefab: {fileID: 2196787826024370438, guid: ddfb4bbe03d53b44587dcf3117e700dd, type: 3}
-  mapRadius: 5
+  mapRadius: 3
 --- !u!4 &1915765893
 Transform:
   m_ObjectHideFlags: 0
