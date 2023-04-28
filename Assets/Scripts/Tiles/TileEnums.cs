@@ -36,6 +36,7 @@ namespace Scripts.Tiles
     {
         Good = 0,
         Evil = 1,
+        Neutral = 2
     }
 
 

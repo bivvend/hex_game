@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using System.Drawing;
+using UnityEngine.U2D;
 
 namespace Scripts
 {
@@ -72,6 +73,8 @@ namespace Scripts
                             t.qIndex = q;
                             t.rIndex = r;
                             t.sIndex = s;
+
+                            t.owner = OwnerType.Neutral;
                             tiles.Add(tile);
                         }
                     }
@@ -115,7 +118,11 @@ namespace Scripts
 
             //HighlightNeighbours(hexTile, HighlightColor.Green);
 
-            HighlightMatchedAndConnectedTiles(hexTile, new List<SearchStrategy> { SearchStrategy.Terrain }, SearchMatchMethod.All, HighlightColor.Green);
+            //HighlightMatchedAndConnectedTiles(hexTile, new List<SearchStrategy> { SearchStrategy.Terrain }, SearchMatchMethod.All, HighlightColor.Green);
+
+            //HighlightMatchedNeighbours(hexTile, new List<SearchStrategy> { SearchStrategy.Owner, SearchStrategy.Terrain }, SearchMatchMethod.Any, HighlightColor.Green);
+
+            HighlightBuildableTiles(OwnerType.Neutral, HighlightColor.Red);
 
         }
 
@@ -167,7 +174,14 @@ namespace Scripts
 
         }
 
-
+        /// <summary>
+        /// Flood fills highlights for tiles connected in chains to the clicked tile
+        /// Flexible match criteria
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <param name="searchStrategies"></param>
+        /// <param name="method"></param>
+        /// <param name="colour"></param>
         public void HighlightMatchedAndConnectedTiles(HexTile tile, List<SearchStrategy> searchStrategies, SearchMatchMethod method, HighlightColor colour)
         {
             //Convert tiles to a new list of HexTileLite
@@ -210,6 +224,104 @@ namespace Scripts
                 }
 
             });
+        }
+
+        /// <summary>
+        /// Highlight the neighbour tiles with a matched set of criteria
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <param name="searchStrategies"></param>
+        /// <param name="method"></param>
+        /// <param name="colour"></param>
+        public void HighlightMatchedNeighbours(HexTile tile, List<SearchStrategy> searchStrategies, SearchMatchMethod method, HighlightColor colour)
+        {
+            //Convert tiles to a new list of HexTileLite
+            HexTileLite liteTile = new HexTileLite(tile.GetComponent<HexTile>());
+            var liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+            var matchedTiles = TIleUtilities.GetNeighboursWithCriteria(liteList, liteTile, searchStrategies, method);
+
+            bool found = false;
+            tiles.ForEach((t) =>
+            {
+                var tile = t.GetComponent<HexTile>();
+                found = false;
+                matchedTiles.ForEach((tN) =>
+                {
+                    if (tN.qIndex == tile.qIndex && tN.rIndex == tile.rIndex && tN.sIndex == tile.sIndex)
+                    {
+                        found = true;
+                    }
+                });
+                if (found)
+                {
+                    switch (colour)
+                    {
+                        case HighlightColor.Green:
+                            tile.ChangeHighlightGreenStatus(true);
+                            break;
+
+                        case HighlightColor.Red:
+                            tile.ChangeHighlightRedStatus(true);
+                            break;
+
+                    }
+
+                }
+                else
+                {
+                    tile.ChangeHighlightGreenStatus(false);
+                    tile.ChangeHighlightRedStatus(false);
+
+                }
+
+            });
+        }
+
+
+        public void HighlightBuildableTiles(OwnerType ownerType, HighlightColor colour)
+        {
+            //Convert tiles to a new list of HexTileLite
+            HexTileLite targetTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType> { }, ownerType, false) ;
+            var liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+            var matchedTiles = TIleUtilities.FilterTilesWithCriteria(liteList, targetTile, new List<SearchStrategy> { SearchStrategy.Owner}, SearchMatchMethod.All);
+
+
+            bool found = false;
+            tiles.ForEach((t) =>
+            {
+                var tile = t.GetComponent<HexTile>();
+                found = false;
+                matchedTiles.ForEach((tN) =>
+                {
+                    if (tN.qIndex == tile.qIndex && tN.rIndex == tile.rIndex && tN.sIndex == tile.sIndex)
+                    {
+                        found = true;
+                    }
+                });
+                if (found)
+                {
+                    switch (colour)
+                    {
+                        case HighlightColor.Green:
+                            tile.ChangeHighlightGreenStatus(true);
+                            break;
+
+                        case HighlightColor.Red:
+                            tile.ChangeHighlightRedStatus(true);
+                            break;
+
+                    }
+
+                }
+                else
+                {
+                    tile.ChangeHighlightGreenStatus(false);
+                    tile.ChangeHighlightRedStatus(false);
+
+                }
+
+            });
+
         }
     }
 }

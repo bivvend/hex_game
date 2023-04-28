@@ -56,6 +56,58 @@ namespace Scripts.Tiles
         }
 
         /// <summary>
+        /// Gets a list of tiles that are neigbours of the clicked tile that also fulfill the given criteria compared to tileTarget
+        /// </summary>
+        /// <param name="tiles"></param>
+        /// <param name="tileTarget"></param>
+        /// <param name="searchStrategies"></param>
+        /// <param name="searchMatchMethod"></param>
+        /// <returns></returns>
+        public static List<HexTileLite> FilterTilesWithCriteria(List<HexTileLite> tiles, HexTileLite tileTarget, List<SearchStrategy> searchStrategies, SearchMatchMethod searchMatchMethod)
+        {
+            var matchedTiles =  tiles.Where((t) => MatchesCriteria(t, tileTarget, searchStrategies, searchMatchMethod)).ToList();
+
+            return matchedTiles;
+
+        }
+
+
+        /// <summary>
+        /// Gets a list of tiles that are neigbours of the clicked tile that also fulfill the given criteria
+        /// </summary>
+        /// <param name="tiles"></param>
+        /// <param name="tile"></param>
+        /// <param name="searchStrategies"></param>
+        /// <param name="searchMatchMethod"></param>
+        /// <returns></returns>
+        public static List<HexTileLite> GetNeighboursWithCriteria(List<HexTileLite> tiles, HexTileLite tile, List<SearchStrategy> searchStrategies, SearchMatchMethod searchMatchMethod)
+        {
+            List<HexTileLite> connectedTiles = new();
+
+
+            var neighbours = GetNeighbours(tile.qIndex, tile.rIndex);
+
+
+
+            neighbours.ForEach((n) =>
+            {
+
+                HexTileLite hexTileLite = tiles.Where((p) => HasSameIndiciesSimple(p, n.Item1, n.Item2, n.Item3)).ToList().First();
+
+                if (MatchesCriteria(hexTileLite, tile, searchStrategies, searchMatchMethod))
+                {
+
+                    connectedTiles.Add(hexTileLite);
+
+                }
+
+            });
+
+            return connectedTiles;
+        }
+
+
+        /// <summary>
         /// Searches through "tiles" list for those connected in chains to tile.  
         /// </summary>
         /// <param name="tiles"></param>
