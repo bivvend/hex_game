@@ -41,5 +41,20 @@ namespace Scripts.Tiles
             this.owner = owner;
             this.visited = visited;
         }
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="hexTile"></param>
+        public HexTileLite(HexTile hexTile)
+        {
+            this.owner =hexTile.owner;
+            this.visited = false;
+            this.qIndex = hexTile.qIndex;
+            this.rIndex =hexTile.rIndex;
+            this.sIndex = hexTile.sIndex;
+            this.Developments = hexTile.Developments;
+            this.TerrainType = hexTile.TerrainType;
+        }
     }
 }

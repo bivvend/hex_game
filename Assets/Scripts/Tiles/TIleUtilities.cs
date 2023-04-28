@@ -62,7 +62,7 @@ namespace Scripts.Tiles
         /// <param name="tile"></param>
         /// <param name="strategy"></param>
         /// <returns></returns>
-        public static List<HexTileLite> FindConnectedTilesByCategory(List<HexTileLite> tiles, HexTileLite tile, SearchStrategy strategy)
+        public static List<HexTileLite> FindConnectedTilesByCategory(List<HexTileLite> tiles, HexTileLite tile, List<SearchStrategy> searchStrategies, SearchMatchMethod searchMatchMethod)
         {
             List<HexTileLite> connectedTiles = new();
 
@@ -80,7 +80,17 @@ namespace Scripts.Tiles
                 List<(int, int, int)> neighbours = GetNeighbours(poppedTile.qIndex, poppedTile.rIndex);
 
                 neighbours.ForEach((n) => {
-                    toVisit.Enqueue(tiles.Where((p) => HasSameIndiciesSimple(p, n.Item1, n.Item2, n.Item3) && MatchesCriteria(p, strategy)).ToList().First());
+                    var matchedTiles =  tiles.Where((p) => HasSameIndiciesSimple(p, n.Item1, n.Item2, n.Item3) && p.visited == false).ToList();
+                    matchedTiles.ForEach((m) => {
+                        if (MatchesCriteria(m, tile, searchStrategies, searchMatchMethod) && m.visited == false)
+                        {
+                            tiles.Where((p) => HasSameIndicies(p, m)).ToList().First().visited = true;
+                            toVisit.Enqueue(m);
+                            connectedTiles.Add(m);
+                            
+                        }
+                    });
+                    
 
                 });
 
@@ -89,11 +99,68 @@ namespace Scripts.Tiles
             return connectedTiles;
         }
 
-        public static bool MatchesCriteria(HexTileLite tile, SearchStrategy strategy)
+        /// <summary>
+        /// Method to compare two tiles based on a set of criterea, can match all or any
+        /// </summary>
+        /// <param name="tile1"></param>
+        /// <param name="tile2"></param>
+        /// <param name="strategies"></param>
+        /// <param name="searchMatchMethod"></param>
+        /// <returns></returns>
+        public static bool MatchesCriteria(HexTileLite tile1, HexTileLite tile2, List<SearchStrategy> strategies, SearchMatchMethod searchMatchMethod)
         {
-            return true;
+            bool matched = searchMatchMethod switch
+            {
+                SearchMatchMethod.All => true,
+                SearchMatchMethod.Any => false,
+                _ => false
+
+            };
+            bool nextMatch = false;
+
+            strategies.ForEach((s) => { 
+                
+                nextMatch = false;
+                switch(s)
+                {
+                    
+                    case SearchStrategy.Terrain:
+                        if (tile1.TerrainType ==  tile2.TerrainType)
+                        {
+                            nextMatch = true;
+                        }
+                        break;
+                    case SearchStrategy.Owner:
+                        if (tile1.owner == tile2.owner)
+                        {
+                            nextMatch = true;
+                        }
+                        break;
+                    case SearchStrategy.DevelopmentType:
+                        if (tile1.Developments.Intersect(tile2.Developments).ToList().Count > 0)
+                        {
+                            nextMatch = true;
+                        }
+                        break;
+                    default:
+                        nextMatch = false;
+                        break;
+                }
 
 
+                matched = searchMatchMethod switch
+                {
+                    SearchMatchMethod.All => matched && nextMatch,
+                    SearchMatchMethod.Any => nextMatch || matched,
+                    _ => false
+
+                };
+
+            });
+
+
+
+            return matched;
         }
 
         public static bool HasSameIndicies(HexTileLite tile1, HexTileLite tile2)

@@ -8,6 +8,9 @@ using UnityEngine.U2D.Animation;
 using UnityEngine.WSA;
 using Unity.VisualScripting.Antlr3.Runtime;
 using System;
+using System.Linq;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using System.Drawing;
 
 namespace Scripts
 {
@@ -110,7 +113,9 @@ namespace Scripts
 
             });
 
-            HighlightNeighbours(hexTile, HighlightColor.Green);
+            //HighlightNeighbours(hexTile, HighlightColor.Green);
+
+            HighlightMatchedAndConnectedTiles(hexTile, new List<SearchStrategy> { SearchStrategy.Terrain }, SearchMatchMethod.All, HighlightColor.Green);
 
         }
 
@@ -160,6 +165,51 @@ namespace Scripts
 
             });
 
+        }
+
+
+        public void HighlightMatchedAndConnectedTiles(HexTile tile, List<SearchStrategy> searchStrategies, SearchMatchMethod method, HighlightColor colour)
+        {
+            //Convert tiles to a new list of HexTileLite
+            HexTileLite liteTile = new HexTileLite(tile.GetComponent<HexTile>());
+            var liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+            var matchedTiles = TIleUtilities.FindConnectedTilesByCategory(liteList, liteTile, searchStrategies, method);
+
+            bool found = false;
+            tiles.ForEach((t) =>
+            {
+                var tile = t.GetComponent<HexTile>();
+                found = false;
+                matchedTiles.ForEach((tN) =>
+                {
+                    if (tN.qIndex == tile.qIndex && tN.rIndex == tile.rIndex && tN.sIndex == tile.sIndex)
+                    {
+                        found = true;
+                    }
+                });
+                if (found)
+                {
+                    switch (colour)
+                    {
+                        case HighlightColor.Green:
+                            tile.ChangeHighlightGreenStatus(true);
+                            break;
+
+                        case HighlightColor.Red:
+                            tile.ChangeHighlightRedStatus(true);
+                            break;
+
+                    }
+
+                }
+                else
+                {
+                    tile.ChangeHighlightGreenStatus(false);
+                    tile.ChangeHighlightRedStatus(false);
+
+                }
+
+            });
         }
     }
 }

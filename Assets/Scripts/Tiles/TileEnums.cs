@@ -55,6 +55,12 @@ namespace Scripts.Tiles
         DevelopmentType = 2
     }
 
+    public enum SearchMatchMethod
+    {
+        All = 0,
+        Any = 1,
+    }
+
 
     
 }
