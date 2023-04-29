@@ -59,7 +59,8 @@ namespace Scripts.Tiles
     {
         Terrain = 0,
         Owner = 1,
-        DevelopmentType = 2
+        DevelopmentType = 2,
+        HasUnits = 3, 
     }
 
     /// <summary>

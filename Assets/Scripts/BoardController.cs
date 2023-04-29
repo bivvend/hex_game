@@ -20,15 +20,19 @@ namespace Scripts
         [HideInInspector]
         public List<GameObject> tiles = new List<GameObject>();
 
+
         public GameObject baseTilePrefab;
         public GameObject edgePrefab;
         public int mapRadius;
 
-
+        [HideInInspector]
+        public GameState GameState;
 
         // Start is called before the first frame update
         void Start()
         {
+            GameState = new GameState();
+            
             Array values = Enum.GetValues(typeof(TerrainType));
             System.Random random = new System.Random();
 

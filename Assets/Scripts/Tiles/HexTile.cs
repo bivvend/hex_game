@@ -45,6 +45,10 @@ namespace Scripts.Tiles
         [HideInInspector]
         public List<UtilityType> Developments { get; private set; } = new();
 
+        public List<Unit> Units { get; private set; } = new();
+
+
+
         [HideInInspector]
         public OwnerType owner = OwnerType.Good;
 

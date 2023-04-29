@@ -31,7 +31,9 @@ namespace Scripts.Tiles
 
         public bool visited = false;
 
-        public HexTileLite(int qIndex, int rIndex, int sIndex, TerrainType terrainType, List<UtilityType> developments, OwnerType owner, bool visited)
+        public bool hasUnits = false;
+
+        public HexTileLite(int qIndex, int rIndex, int sIndex, TerrainType terrainType, List<UtilityType> developments, OwnerType owner, bool visited, bool hasUnits)
         {
             this.qIndex = qIndex;
             this.rIndex = rIndex;
@@ -40,6 +42,7 @@ namespace Scripts.Tiles
             Developments = developments;
             this.owner = owner;
             this.visited = visited;
+            this.hasUnits = hasUnits;
         }
 
         /// <summary>
@@ -55,6 +58,7 @@ namespace Scripts.Tiles
             this.sIndex = hexTile.sIndex;
             this.Developments = hexTile.Developments;
             this.TerrainType = hexTile.TerrainType;
+            this.hasUnits = hexTile.Units.Count > 0;
         }
 
         /// <summary>
@@ -70,6 +74,7 @@ namespace Scripts.Tiles
             this.sIndex = hexTile.sIndex;
             this.Developments = hexTile.Developments;
             this.TerrainType = hexTile.TerrainType;
+            this.hasUnits = hexTile.hasUnits;
         }
     }
 }
