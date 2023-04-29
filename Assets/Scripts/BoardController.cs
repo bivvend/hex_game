@@ -122,7 +122,15 @@ namespace Scripts
 
             //HighlightMatchedNeighbours(hexTile, new List<SearchStrategy> { SearchStrategy.Owner, SearchStrategy.Terrain }, SearchMatchMethod.Any, HighlightColor.Green);
 
-            HighlightBuildableTiles(OwnerType.Neutral, HighlightColor.Red);
+            //HighlightBuildableTiles(OwnerType.Neutral, HighlightColor.Red);
+
+            //List<(object, object)> positiveConditions = new();
+            //List<(object, object)> negativeConditions = new();
+            //positiveConditions.Add((TerrainType.Mountains, TerrainType.Swamp));
+            //positiveConditions.Add((TerrainType.Mountains, TerrainType.Mountains));
+            //negativeConditions.Add((OwnerType.Neutral, OwnerType.Neutral));
+
+            HighlightBuildableTiles(OwnerType.Neutral, HighlightColor.Green);
 
         }
 
@@ -233,7 +241,7 @@ namespace Scripts
         /// <param name="searchStrategies"></param>
         /// <param name="method"></param>
         /// <param name="colour"></param>
-        public void HighlightMatchedNeighbours(HexTile tile, List<SearchStrategy> searchStrategies, SearchMatchMethod method, HighlightColor colour)
+        public void HighlightMatchedNeighboursOfTile(HexTile tile, List<SearchStrategy> searchStrategies, SearchMatchMethod method, HighlightColor colour)
         {
             //Convert tiles to a new list of HexTileLite
             HexTileLite liteTile = new HexTileLite(tile.GetComponent<HexTile>());
@@ -280,11 +288,77 @@ namespace Scripts
 
         public void HighlightBuildableTiles(OwnerType ownerType, HighlightColor colour)
         {
-            //Convert tiles to a new list of HexTileLite
-            HexTileLite targetTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType> { }, ownerType, false) ;
+            List<HexTileLite> matchedTiles = new();
+            List<HexTileLite> buildableTiles = new();
             var liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
-            var matchedTiles = TIleUtilities.FilterTilesWithCriteria(liteList, targetTile, new List<SearchStrategy> { SearchStrategy.Owner}, SearchMatchMethod.All);
 
+            List<(object, object)> positiveConditions = new();
+            List<(object, object)> negativeConditions = new();
+            positiveConditions.Add((ownerType, ownerType));
+            //Get all tiles of that owner
+            matchedTiles = TIleUtilities.FilterTilesByListOfGenericConditions(liteList, positiveConditions, negativeConditions);
+            
+            //Get all the neighbours of all the tiles that are matched.
+
+            //Build a unique set
+
+            //Filter by conditions
+
+
+
+
+
+            bool found = false;
+            tiles.ForEach((t) =>
+            {
+                var tile = t.GetComponent<HexTile>();
+                found = false;
+                matchedTiles.ForEach((tN) =>
+                {
+                    if (tN.qIndex == tile.qIndex && tN.rIndex == tile.rIndex && tN.sIndex == tile.sIndex)
+                    {
+                        found = true;
+                    }
+                });
+                if (found)
+                {
+                    switch (colour)
+                    {
+                        case HighlightColor.Green:
+                            tile.ChangeHighlightGreenStatus(true);
+                            break;
+
+                        case HighlightColor.Red:
+                            tile.ChangeHighlightRedStatus(true);
+                            break;
+
+                    }
+
+                }
+                else
+                {
+                    tile.ChangeHighlightGreenStatus(false);
+                    tile.ChangeHighlightRedStatus(false);
+
+                }
+
+            });
+
+        }
+
+        public void HighlightTilesBasedOnGenericFilter<T>( List<(T, object)> positiveConditions, List<(T, object)> negativeConditions, HighlightColor colour, bool containsRepeatedTypes)
+        {
+
+            var liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+            List<HexTileLite> matchedTiles = new();
+            if (!containsRepeatedTypes)
+            {
+                 matchedTiles = TIleUtilities.FilterTilesByListOfGenericConditions(liteList, positiveConditions, negativeConditions);
+            }
+            else
+            {
+                matchedTiles = TIleUtilities.FilterTilesByListOfGenericConditionsWithSupportForRepeats(liteList, positiveConditions, negativeConditions);
+            }
 
             bool found = false;
             tiles.ForEach((t) =>
