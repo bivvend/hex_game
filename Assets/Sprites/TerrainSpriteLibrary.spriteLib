@@ -1,0 +1,484 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Grass
+    m_Hash: 701280503
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Grass1
+      m_Hash: 543966392
+      m_Sprite: {fileID: 1221863603, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1221863603, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Grass2
+      m_Hash: 962925826
+      m_Sprite: {fileID: -936527151, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -936527151, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Grass3
+      m_Hash: 241313172
+      m_Sprite: {fileID: 1379055141, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1379055141, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Grass4
+      m_Hash: 268873783
+      m_Sprite: {fileID: -1977172711, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1977172711, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: Mountains
+    m_Hash: 906859302
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Mountains1
+      m_Hash: 291989465
+      m_Sprite: {fileID: -1372026240, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1372026240, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Mountains2
+      m_Hash: 141440611
+      m_Sprite: {fileID: 85602662, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 85602662, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Mountains3
+      m_Hash: 1063847669
+      m_Sprite: {fileID: 646620859, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 646620859, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Mountains4
+      m_Hash: 554537814
+      m_Sprite: {fileID: 1286899000, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1286899000, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: Hills
+    m_Hash: 688286325
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Hills1
+      m_Hash: 588934254
+      m_Sprite: {fileID: 1564116735, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1564116735, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Hills2
+      m_Hash: 974339540
+      m_Sprite: {fileID: 1902204744, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1902204744, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Hills3
+      m_Hash: 219417922
+      m_Sprite: {fileID: 1899771321, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1899771321, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Hills4
+      m_Hash: 326146273
+      m_Sprite: {fileID: -745464303, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -745464303, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: Forest
+    m_Hash: 804345474
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Forest1
+      m_Hash: 12975341
+      m_Sprite: {fileID: -1758369359, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1758369359, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Forest2
+      m_Hash: 432844119
+      m_Sprite: {fileID: -1421962147, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1421962147, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Forest3
+      m_Hash: 785096129
+      m_Sprite: {fileID: -1758369359, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1758369359, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Forest4
+      m_Hash: 816777314
+      m_Sprite: {fileID: -1421962147, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1421962147, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: Water
+    m_Hash: 988953566
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Water1
+      m_Hash: 579723871
+      m_Sprite: {fileID: 116925349, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 116925349, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Water2
+      m_Hash: 998552549
+      m_Sprite: {fileID: -1479602278, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1479602278, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Water3
+      m_Hash: 209945459
+      m_Sprite: {fileID: 387288336, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 387288336, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Water4
+      m_Hash: 317134544
+      m_Sprite: {fileID: 846619645, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 846619645, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: Swamp
+    m_Hash: 104472546
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Swamp1
+      m_Hash: 224286460
+      m_Sprite: {fileID: 437279019, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 437279019, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Swamp2
+      m_Hash: 341247814
+      m_Sprite: {fileID: -1832566948, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1832566948, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Swamp3
+      m_Hash: 592459728
+      m_Sprite: {fileID: 94451623, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 94451623, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    - m_Name: Swamp4
+      m_Hash: 1026859635
+      m_Sprite: {fileID: 1159783497, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1159783497, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: GrassEvil
+    m_Hash: 537333724
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Grass1
+      m_Hash: 543966392
+      m_Sprite: {fileID: -1295012337, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1295012337, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Grass2
+      m_Hash: 962925826
+      m_Sprite: {fileID: -650033509, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -650033509, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Grass3
+      m_Hash: 241313172
+      m_Sprite: {fileID: -2076573790, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2076573790, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Grass4
+      m_Hash: 268873783
+      m_Sprite: {fileID: -1855879082, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1855879082, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: MountainsEvil
+    m_Hash: 6881491
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Mountains1
+      m_Hash: 291989465
+      m_Sprite: {fileID: -1860062917, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1860062917, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Mountains2
+      m_Hash: 141440611
+      m_Sprite: {fileID: 1372486850, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1372486850, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Mountains3
+      m_Hash: 1063847669
+      m_Sprite: {fileID: 643310740, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 643310740, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Mountains4
+      m_Hash: 554537814
+      m_Sprite: {fileID: 907333125, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 907333125, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: HillsEvil
+    m_Hash: 221789438
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Hills1
+      m_Hash: 588934254
+      m_Sprite: {fileID: -795394241, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -795394241, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Hills2
+      m_Hash: 974339540
+      m_Sprite: {fileID: -2002568430, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2002568430, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Hills3
+      m_Hash: 219417922
+      m_Sprite: {fileID: -1636934343, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1636934343, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Hills4
+      m_Hash: 326146273
+      m_Sprite: {fileID: -1636934343, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1636934343, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: ForestEvil
+    m_Hash: 157736027
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Forest1
+      m_Hash: 12975341
+      m_Sprite: {fileID: -1155590105, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1155590105, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Forest2
+      m_Hash: 432844119
+      m_Sprite: {fileID: 263566089, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 263566089, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Forest3
+      m_Hash: 785096129
+      m_Sprite: {fileID: 1090739817, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1090739817, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Forest4
+      m_Hash: 816777314
+      m_Sprite: {fileID: -1269813697, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1269813697, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: WaterEvil
+    m_Hash: 603586618
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Water1
+      m_Hash: 579723871
+      m_Sprite: {fileID: 1660754641, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1660754641, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Water2
+      m_Hash: 998552549
+      m_Sprite: {fileID: 1286301670, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1286301670, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Water3
+      m_Hash: 209945459
+      m_Sprite: {fileID: 106441420, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 106441420, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Water4
+      m_Hash: 317134544
+      m_Sprite: {fileID: 206870407, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 206870407, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: SwampEvil
+    m_Hash: 666307582
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Swamp1
+      m_Hash: 224286460
+      m_Sprite: {fileID: -925147469, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -925147469, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Swamp2
+      m_Hash: 341247814
+      m_Sprite: {fileID: 1829727415, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1829727415, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Swamp3
+      m_Hash: 592459728
+      m_Sprite: {fileID: 676561237, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 676561237, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    - m_Name: Swamp4
+      m_Hash: 1026859635
+      m_Sprite: {fileID: -1321731751, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1321731751, guid: 8bca5ab41152d2f478393994670752aa, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: GrassGood
+    m_Hash: 24670236
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Grass1
+      m_Hash: 543966392
+      m_Sprite: {fileID: 1229730282, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1229730282, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Grass2
+      m_Hash: 962925826
+      m_Sprite: {fileID: -466830880, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -466830880, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Grass3
+      m_Hash: 241313172
+      m_Sprite: {fileID: 101082770, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 101082770, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Grass4
+      m_Hash: 268873783
+      m_Sprite: {fileID: 915926276, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 915926276, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: MountainsGood
+    m_Hash: 555122451
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Mountains1
+      m_Hash: 291989465
+      m_Sprite: {fileID: -544566791, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -544566791, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Mountains2
+      m_Hash: 141440611
+      m_Sprite: {fileID: 976478985, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 976478985, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Mountains3
+      m_Hash: 1063847669
+      m_Sprite: {fileID: -1504423334, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1504423334, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Mountains4
+      m_Hash: 554537814
+      m_Sprite: {fileID: 1324170757, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1324170757, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: HillsGood
+    m_Hash: 742867774
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Hills1
+      m_Hash: 588934254
+      m_Sprite: {fileID: 61253189, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 61253189, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Hills2
+      m_Hash: 974339540
+      m_Sprite: {fileID: -2122145731, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2122145731, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Hills3
+      m_Hash: 219417922
+      m_Sprite: {fileID: -1015402828, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1015402828, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Hills4
+      m_Hash: 326146273
+      m_Sprite: {fileID: 689299455, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 689299455, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: ForestGood
+    m_Hash: 672768923
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Forest1
+      m_Hash: 12975341
+      m_Sprite: {fileID: -2034440231, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -2034440231, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Forest2
+      m_Hash: 432844119
+      m_Sprite: {fileID: -673686072, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -673686072, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Forest3
+      m_Hash: 785096129
+      m_Sprite: {fileID: 1685240140, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1685240140, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Forest4
+      m_Hash: 816777314
+      m_Sprite: {fileID: -1443982966, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1443982966, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: WaterGood
+    m_Hash: 42303482
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Water1
+      m_Hash: 579723871
+      m_Sprite: {fileID: -776424654, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -776424654, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Water2
+      m_Hash: 998552549
+      m_Sprite: {fileID: 420006702, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 420006702, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Water3
+      m_Hash: 209945459
+      m_Sprite: {fileID: 1444034274, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1444034274, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Water4
+      m_Hash: 317134544
+      m_Sprite: {fileID: -1835959723, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1835959723, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  - m_Name: SwampGood
+    m_Hash: 113800254
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Swamp1
+      m_Hash: 224286460
+      m_Sprite: {fileID: -1194456053, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1194456053, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Swamp2
+      m_Hash: 341247814
+      m_Sprite: {fileID: 1274135025, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1274135025, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Swamp3
+      m_Hash: 592459728
+      m_Sprite: {fileID: 168711250, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 168711250, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    - m_Name: Swamp4
+      m_Hash: 1026859635
+      m_Sprite: {fileID: -906442836, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -906442836, guid: da3d4f8765b92824aa14ddaa8093abc7, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 4
+  m_PrimaryLibraryGUID: 

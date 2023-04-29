@@ -106,8 +106,27 @@ namespace Scripts.Tiles
                     break;
             }
 
-            _spriteName = _terrainCategory + _terrainVariant.ToString();
+            string terrainSuffix = "";
+            switch(owner)
+            {
+                case OwnerType.Good:
+                    terrainSuffix = "Good";
+                    break;
+                case OwnerType.Evil:
+                    terrainSuffix = "Evil";
+                    break;
+                case OwnerType.Neutral:
+                    terrainSuffix = "";
+                    break;
+                default:
+                    terrainSuffix = "";
+                    break;
+            }
 
+            
+            //This order matters!
+            _spriteName = _terrainCategory + _terrainVariant.ToString();
+            _terrainCategory += terrainSuffix;
 
             //Get the sprite resolvers from the prefabs
             spriteResolver = tileSpritePrefab.GetComponent<SpriteResolver>();

@@ -21,7 +21,9 @@ namespace Scripts.Tiles
         Forest = 5,
     }
 
-    //Development overlay (from cards). There are 6 of these per hex
+    /// <summary>
+    /// Development overlay (from cards). There are 6 of these per hex
+    /// </summary>
     public enum UtilityType
     {
         Mine = 0,
@@ -31,7 +33,9 @@ namespace Scripts.Tiles
         Capital = 4,
     }
 
-    //Determines which graphics set is used for rendering base and overlay
+    /// <summary>
+    /// Determines which graphics set is used for rendering base and overlay
+    /// </summary>
     public enum OwnerType
     {
         Good = 0,
@@ -39,7 +43,9 @@ namespace Scripts.Tiles
         Neutral = 2
     }
 
-
+    /// <summary>
+    /// The tile selector highlight options
+    /// </summary>
     public enum HighlightColor
     {
         Green = 0,
@@ -56,6 +62,9 @@ namespace Scripts.Tiles
         DevelopmentType = 2
     }
 
+    /// <summary>
+    /// Matching types for search routine
+    /// </summary>
     public enum SearchMatchMethod
     {
         All = 0,

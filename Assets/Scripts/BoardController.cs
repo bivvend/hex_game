@@ -74,7 +74,20 @@ namespace Scripts
                             t.rIndex = r;
                             t.sIndex = s;
 
-                            t.owner = OwnerType.Neutral;
+                            if(q > 2)
+                            {
+                                t.owner = OwnerType.Good;
+                            }
+                            else if(q < -2)
+                            {
+
+                                t.owner = OwnerType.Evil;
+                            }
+                            else
+                            {
+                                t.owner = OwnerType.Neutral;
+                            }
+                            
                             tiles.Add(tile);
                         }
                     }
@@ -92,14 +105,8 @@ namespace Scripts
             
         }
 
-
-        public void ClickedTile(HexTile hexTile)
+        public void HighlightTile(HexTile hexTile)
         {
-            //This looks at current game state to determine the role of the click
-            
-            
-            Debug.Log($"{hexTile.qIndex},{hexTile.rIndex},{hexTile.sIndex}");
-            //Go through all tiles and deselect rest
             tiles.ForEach((t) =>
             {
                 HexTile tFound = t.GetComponent<HexTile>();
@@ -116,6 +123,18 @@ namespace Scripts
 
             });
 
+        }
+
+
+        public void ClickedTile(HexTile hexTile)
+        {
+            //This looks at current game state to determine the role of the click
+            
+            
+            Debug.Log($"{hexTile.qIndex},{hexTile.rIndex},{hexTile.sIndex}");
+            //Go through all tiles and deselect rest
+            
+
             //HighlightNeighbours(hexTile, HighlightColor.Green);
 
             //HighlightMatchedAndConnectedTiles(hexTile, new List<SearchStrategy> { SearchStrategy.Terrain }, SearchMatchMethod.All, HighlightColor.Green);
@@ -130,7 +149,7 @@ namespace Scripts
             //positiveConditions.Add((TerrainType.Mountains, TerrainType.Mountains));
             //negativeConditions.Add((OwnerType.Neutral, OwnerType.Neutral));
 
-            HighlightBuildableTiles(OwnerType.Neutral, HighlightColor.Green);
+            HighlightBuildableTiles(OwnerType.Good, HighlightColor.Green);
 
         }
 
@@ -295,14 +314,24 @@ namespace Scripts
             List<(object, object)> positiveConditions = new();
             List<(object, object)> negativeConditions = new();
             positiveConditions.Add((ownerType, ownerType));
+            negativeConditions.Add((TerrainType.Water, TerrainType.Water));
             //Get all tiles of that owner
             matchedTiles = TIleUtilities.FilterTilesByListOfGenericConditions(liteList, positiveConditions, negativeConditions);
+
+            //Get all the neighbours of all the tiles that are matched and are neutral
+
+            List<HexTileLite> neighbours = new();
             
-            //Get all the neighbours of all the tiles that are matched.
+            matchedTiles.ForEach((m) => {
+                HexTileLite targetTile = new HexTileLite(m);
+                targetTile.owner = OwnerType.Neutral;
+                //Change to neutral for search
+                neighbours.AddRange(TIleUtilities.GetNeighboursWithCriteria(liteList, targetTile, new List<SearchStrategy> { SearchStrategy.Owner }, SearchMatchMethod.All));
+            });
 
             //Build a unique set
 
-            //Filter by conditions
+            neighbours = neighbours.Distinct().ToList();
 
 
 
@@ -313,7 +342,7 @@ namespace Scripts
             {
                 var tile = t.GetComponent<HexTile>();
                 found = false;
-                matchedTiles.ForEach((tN) =>
+                neighbours.ForEach((tN) =>
                 {
                     if (tN.qIndex == tile.qIndex && tN.rIndex == tile.rIndex && tN.sIndex == tile.sIndex)
                     {

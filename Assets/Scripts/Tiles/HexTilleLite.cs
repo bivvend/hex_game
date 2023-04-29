@@ -43,7 +43,7 @@ namespace Scripts.Tiles
         }
 
         /// <summary>
-        /// Copy constructor
+        /// Copy constructor from Hextile
         /// </summary>
         /// <param name="hexTile"></param>
         public HexTileLite(HexTile hexTile)
@@ -52,6 +52,21 @@ namespace Scripts.Tiles
             this.visited = false;
             this.qIndex = hexTile.qIndex;
             this.rIndex =hexTile.rIndex;
+            this.sIndex = hexTile.sIndex;
+            this.Developments = hexTile.Developments;
+            this.TerrainType = hexTile.TerrainType;
+        }
+
+        /// <summary>
+        /// Copy construstor 
+        /// </summary>
+        /// <param name="hexTile"></param>
+        public HexTileLite(HexTileLite hexTile)
+        {
+            this.owner = hexTile.owner;
+            this.visited = false;
+            this.qIndex = hexTile.qIndex;
+            this.rIndex = hexTile.rIndex;
             this.sIndex = hexTile.sIndex;
             this.Developments = hexTile.Developments;
             this.TerrainType = hexTile.TerrainType;
