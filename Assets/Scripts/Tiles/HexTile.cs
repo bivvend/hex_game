@@ -1,3 +1,4 @@
+using Scripts.Units;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,12 +13,18 @@ namespace Scripts.Tiles
         //Sprite resolvers allolw swapping sprite at runtime
         public SpriteResolver spriteResolver;
         public SpriteResolver edgeResolver;
+        public SpriteResolver unitResolver;
+        public SpriteResolver heroResolver;
         //Prefabs from editor
         public GameObject tileSpritePrefab;
         public GameObject edgeSpritePrefab;
+        public GameObject unitsSpritePrefab;
+        public GameObject heroSpritePrefab;
 
         private GameObject _tileSprite;
         private GameObject _edgeSprite;
+        private GameObject _unitSprite;
+        private GameObject _heroSprite;
 
         public BoardController boardController;
 
@@ -44,10 +51,17 @@ namespace Scripts.Tiles
         //List of 6 utility types one for each side
         [HideInInspector]
         public List<UtilityType> Developments { get; private set; } = new();
-
+        [HideInInspector]
         public List<Unit> Units { get; private set; } = new();
 
+        [HideInInspector]
+        public bool hasUnits => Units.Count > 0;
 
+        /// <summary>
+        /// A calcualted number added to the tile income based on surrounding development
+        /// Recalcualted when a new development is added.
+        /// </summary>
+        public int AdjacencyBonus = 0;
 
         [HideInInspector]
         public OwnerType owner = OwnerType.Good;
@@ -62,6 +76,19 @@ namespace Scripts.Tiles
         public bool isHighlightedGreen { get; private set; } = false;
         public bool isHighlightedRed { get; private set; } = false;
         private bool _selectionStatusChanged = false;
+
+        /// <summary>
+        /// Returns the stength of the square based on the Units present.
+        /// </summary>
+        /// <returns></returns>
+        public int GetUnitStrength()
+        {
+            int numTroops = 0;
+
+
+            return numTroops;
+
+        }
 
 
         public void ChangeSelectionStatus(bool statusIn)

@@ -2,19 +2,18 @@ using Scripts.Tiles;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Scripts.Units.UnitEnums;
 
-public abstract class Unit : MonoBehaviour
+namespace Scripts.Units
 {
-    [HideInInspector]
-    public int numberOfTroops;
-    [HideInInspector]
-    public bool isHero;
-    [HideInInspector]
-    public OwnerType ownerType;
+    public abstract class Unit
+    {
+        public int numberOfTroops;
+        public UnitType unitType;
+        public OwnerType ownerType;
 
-    public GameObject spritePrefab;
-
-    public abstract void SetNumberOfTroops(int number);
+        public abstract void GetNumberOfTroops(int number);
 
 
+    }
 }

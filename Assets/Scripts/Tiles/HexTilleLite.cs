@@ -27,9 +27,12 @@ namespace Scripts.Tiles
 
         public List<UtilityType> Developments = new();
 
+
         public OwnerType owner = OwnerType.Good;
 
+        //Used in some search routines
         public bool visited = false;
+
 
         public bool hasUnits = false;
 

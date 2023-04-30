@@ -15,10 +15,11 @@ namespace Scripts
             None = 0,  //Cannot interact as animations are running or is AI turn
             PlacingUnit = 1, //Waiting for a unit to be placed
             PlacingHero = 2,
-            PlacingDevelopment = 3,
-            MovingHero = 4,
-            Capital = 5,
-            SelectTile = 6  //Default state during your turn  (doing nothing) but can click on tile for info
+            PlacingWizard = 3,
+            PlacingDevelopment = 4,
+            MovingHero = 5,
+            SelectTile = 6,  //Default state during your turn  (doing nothing) but can click on tile for info
+            MovingWizard = 7,
         }
 
         public enum SelectionState

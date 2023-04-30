@@ -31,6 +31,8 @@ namespace Scripts.Tiles
         Farm = 2,
         Fort = 3,
         Capital = 4,
+        SorcerersTower = 5,
+        QuestSite = 6,
     }
 
     /// <summary>
