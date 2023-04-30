@@ -1,17 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Scripts.Tiles;
-using Unity.VisualScripting;
-using UnityEngine.Tilemaps;
-using UnityEngine.U2D.Animation;
-using UnityEngine.WSA;
-using Unity.VisualScripting.Antlr3.Runtime;
 using System;
 using System.Linq;
-using static UnityEngine.RuleTile.TilingRuleOutput;
-using System.Drawing;
-using UnityEngine.U2D;
+
 
 namespace Scripts
 {
@@ -19,10 +11,14 @@ namespace Scripts
     {
         [HideInInspector]
         public List<GameObject> tiles = new List<GameObject>();
+        [HideInInspector]
+        public List<GameObject> cards = new List<GameObject>();
 
 
         public GameObject baseTilePrefab;
         public GameObject edgePrefab;
+        public GameObject unitsSpritePrefab;
+        public GameObject heroSpritePrefab;
         public int mapRadius;
 
         [HideInInspector]

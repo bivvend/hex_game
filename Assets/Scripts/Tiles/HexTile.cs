@@ -2,6 +2,7 @@ using Scripts.Units;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -10,7 +11,7 @@ namespace Scripts.Tiles
     public class HexTile : MonoBehaviour
     {
         //Game objects
-        //Sprite resolvers allolw swapping sprite at runtime
+        //Sprite resolvers allow swapping sprite at runtime
         public SpriteResolver spriteResolver;
         public SpriteResolver edgeResolver;
         public SpriteResolver unitResolver;
@@ -55,8 +56,18 @@ namespace Scripts.Tiles
         public List<Unit> Units { get; private set; } = new();
 
         [HideInInspector]
+        public bool hasHero => Units.Where((u) => u.unitType == UnitEnums.UnitType.Hero).ToList().Count > 0;
+
+        [HideInInspector]
+        public bool hasGeneral => Units.Where((u) => u.unitType == UnitEnums.UnitType.General).ToList().Count > 0;
+
+        [HideInInspector]
+        public bool hasWizard => Units.Where((u) => u.unitType == UnitEnums.UnitType.Wizard).ToList().Count > 0;
+
+        [HideInInspector]
         public bool hasUnits => Units.Count > 0;
 
+        [HideInInspector]
         /// <summary>
         /// A calcualted number added to the tile income based on surrounding development
         /// Recalcualted when a new development is added.
@@ -85,6 +96,10 @@ namespace Scripts.Tiles
         {
             int numTroops = 0;
 
+            Units.ForEach((unit) =>
+            {
+                numTroops += unit.GetNumberOfTroops();
+            });
 
             return numTroops;
 

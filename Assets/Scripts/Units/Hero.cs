@@ -7,9 +7,9 @@ namespace Scripts.Units
 {
     public class Hero : Unit
     {
-        public override void GetNumberOfTroops(int number)
+        public override int GetNumberOfTroops()
         {
-            throw new System.NotImplementedException();
+            return GameScaling.heroMultiplier;
         }
 
     }

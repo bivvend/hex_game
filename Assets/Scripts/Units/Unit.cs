@@ -12,7 +12,7 @@ namespace Scripts.Units
         public UnitType unitType;
         public OwnerType ownerType;
 
-        public abstract void GetNumberOfTroops(int number);
+        public abstract int GetNumberOfTroops();
 
 
     }
