@@ -147,7 +147,7 @@ namespace Scripts
 
         public void BuildButtonClicked()
         {
-            if(GameState.interactionState != GameStateEnums.InteractionState.None)
+            if(CanClick())
             {
                 if(GameState.interactionState == GameStateEnums.InteractionState.PlacingDevelopment)
                 {
@@ -173,25 +173,67 @@ namespace Scripts
 
         }
 
+        private bool CanClick()
+        {
+            return GameState.interactionState != GameStateEnums.InteractionState.None && GameState.animationState == GameStateEnums.CurrentAnimationState.None;
+        }
+
 
         public void PlaceUnitButtonClicked()
         {
+            if (CanClick())
+            {
 
+            }
+            else
+            {
+                Debug.Log("Clicked when inactive!");
+
+            }
 
         }
 
 
         public void ShuffleButtonClicked()
         {
+            if (CanClick())
+            {
 
+            }
+            else
+            {
+                Debug.Log("Clicked when inactive!");
+
+            }
 
         }
 
 
         public void EndTurnButtonClicked()
         {
+            if (CanClick())
+            {
+                DeselectAllTiles();
+                GameState.SetPlayerActive(GetNextPlayer());
+                GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
+            }
+            else
+            {
+                Debug.Log("Clicked when inactive!");
 
+            }
+        }
 
+        private GameStateEnums.PlayerActive GetNextPlayer()
+        {
+            if(GameState.playerActive == GameStateEnums.PlayerActive.Good)
+            {
+                return GameStateEnums.PlayerActive.Evil;
+            }
+            else
+            {
+                return GameStateEnums.PlayerActive.Good;
+            }
         }
 
         /// <summary>
@@ -232,17 +274,7 @@ namespace Scripts
 
         public void PlaceDevelopmentInTile(HexTile tile, UtilityType utilityType)
         {
-            if(GameState.playerActive == GameStateEnums.PlayerActive.Good)
-            {
-
-                tile.AddDevelopment(new List<UtilityType>(), GameState.PlayerActiveToOwnerType());
-                
-            }
-            else
-            {
-                tile.owner = OwnerType.Evil;
-            }
-
+            tile.AddDevelopment(new List<UtilityType>(), GameState.PlayerActiveToOwnerType());
         }
 
         
@@ -441,7 +473,8 @@ namespace Scripts
 
             neighbours = neighbours.Distinct().ToList();
 
-
+            //Remove any neighbours that are water
+            neighbours = neighbours.Where((n) => n.TerrainType != TerrainType.Water).ToList();
 
 
 
