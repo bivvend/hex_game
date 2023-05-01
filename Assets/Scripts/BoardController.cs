@@ -3,6 +3,9 @@ using UnityEngine;
 using Scripts.Tiles;
 using System;
 using System.Linq;
+using Unity.VisualScripting;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using System.Drawing;
 
 
 namespace Scripts
@@ -12,7 +15,10 @@ namespace Scripts
         [HideInInspector]
         public List<GameObject> tiles = new List<GameObject>();
         [HideInInspector]
-        public List<GameObject> cards = new List<GameObject>();
+        public List<GameObject> developmentCards = new List<GameObject>();
+        [HideInInspector]
+        public List<GameObject> unitCards = new List<GameObject>();
+
 
 
         public GameObject baseTilePrefab;
@@ -27,8 +33,8 @@ namespace Scripts
         // Start is called before the first frame update
         void Start()
         {
-            GameState = new GameState();
-            
+            SetupGameState();
+
             Array values = Enum.GetValues(typeof(TerrainType));
             System.Random random = new System.Random();
 
@@ -105,6 +111,19 @@ namespace Scripts
             
         }
 
+
+        private void SetupGameState()
+        {
+            GameState = new GameState();
+            GameState.SetSelectionState(GameStateEnums.SelectionState.None);
+            GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
+            GameState.SetAnimationState(GameStateEnums.CurrentAnimationState.None);
+            GameState.SetPlayerActive(GameStateEnums.PlayerActive.Good);
+            GameState.SetMapMode(GameStateEnums.MapMode.All);
+
+
+        }
+
         public void HighlightTile(HexTile hexTile)
         {
             tiles.ForEach((t) =>
@@ -126,30 +145,119 @@ namespace Scripts
         }
 
 
+        public void BuildButtonClicked()
+        {
+            if(GameState.interactionState != GameStateEnums.InteractionState.None)
+            {
+                if(GameState.interactionState == GameStateEnums.InteractionState.PlacingDevelopment)
+                {
+                    GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
+                    DeselectAllTiles();
+                }
+                else
+                {
+                    GameState.SetInteractionState(GameStateEnums.InteractionState.PlacingDevelopment);
+                    DeselectAllTiles();
+                    if (GameState.playerActive == GameStateEnums.PlayerActive.Good)
+                    {
+                        HighlightBuildableTiles(OwnerType.Good, HighlightColor.Green) ;
+                    }
+                    else
+                    {
+                        HighlightBuildableTiles(OwnerType.Evil, HighlightColor.Green);
+                    }
+
+
+                }
+            }
+
+        }
+
+
+        public void PlaceUnitButtonClicked()
+        {
+
+
+        }
+
+
+        public void ShuffleButtonClicked()
+        {
+
+
+        }
+
+
+        public void EndTurnButtonClicked()
+        {
+
+
+        }
+
+        /// <summary>
+        /// Generic handler for the actiion when a tile is clicked - depends on current GameState
+        /// </summary>
+        /// <param name="hexTile"></param>
         public void ClickedTile(HexTile hexTile)
         {
-            //This looks at current game state to determine the role of the click
-            
-            
-            Debug.Log($"{hexTile.qIndex},{hexTile.rIndex},{hexTile.sIndex}");
-            //Go through all tiles and deselect rest
-            
+            if(GameState.interactionState != GameStateEnums.InteractionState.None && GameState.animationState == GameStateEnums.CurrentAnimationState.None)
+            {
+                if(GameState.interactionState == GameStateEnums.InteractionState.SelectTile)
+                {
+                    HighlightTile(hexTile);
 
-            //HighlightNeighbours(hexTile, HighlightColor.Green);
+                }
+                else if (GameState.interactionState == GameStateEnums.InteractionState.PlacingDevelopment)
+                {
+                   if(hexTile.isHighlightedGreen)
+                   {
+                        PlaceDevelopmentInTile(hexTile, UtilityType.Mine);
+                        HighlightBuildableTiles(GameState.PlayerActiveToOwnerType(), HighlightColor.Green);
+                      
+                    }
+                }
 
-            //HighlightMatchedAndConnectedTiles(hexTile, new List<SearchStrategy> { SearchStrategy.Terrain }, SearchMatchMethod.All, HighlightColor.Green);
 
-            //HighlightMatchedNeighbours(hexTile, new List<SearchStrategy> { SearchStrategy.Owner, SearchStrategy.Terrain }, SearchMatchMethod.Any, HighlightColor.Green);
+            }
+            else
+            {
+                Debug.Log("Clicked when inactive!");
 
-            //HighlightBuildableTiles(OwnerType.Neutral, HighlightColor.Red);
+            }
 
-            //List<(object, object)> positiveConditions = new();
-            //List<(object, object)> negativeConditions = new();
-            //positiveConditions.Add((TerrainType.Mountains, TerrainType.Swamp));
-            //positiveConditions.Add((TerrainType.Mountains, TerrainType.Mountains));
-            //negativeConditions.Add((OwnerType.Neutral, OwnerType.Neutral));
 
-            HighlightBuildableTiles(OwnerType.Good, HighlightColor.Green);
+            //HighlightBuildableTiles(OwnerType.Good, HighlightColor.Green);
+
+        }
+
+        public void PlaceDevelopmentInTile(HexTile tile, UtilityType utilityType)
+        {
+            if(GameState.playerActive == GameStateEnums.PlayerActive.Good)
+            {
+
+                tile.AddDevelopment(new List<UtilityType>(), GameState.PlayerActiveToOwnerType());
+                
+            }
+            else
+            {
+                tile.owner = OwnerType.Evil;
+            }
+
+        }
+
+        
+
+        //Changes the tile to deselected
+        public void DeselectAllTiles()
+        {
+            tiles.ForEach((t) =>
+            {
+                var tile = t.GetComponent<HexTile>();
+                tile.ChangeHighlightGreenStatus(false);
+                tile.ChangeHighlightRedStatus(false);
+                tile.ChangeSelectionStatus(false);
+
+            });
 
         }
 

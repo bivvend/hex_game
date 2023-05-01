@@ -35,6 +35,9 @@ namespace Scripts.Tiles
         [HideInInspector]
         public float renderPosY = 0.0f;
 
+        public float renderOffsetX = -5.0f;
+        public float renderOffsetY = 0.0f;
+
         private float _size = 2.8f; //Width of flat top 
 
         //Indicies in cube coords
@@ -86,7 +89,11 @@ namespace Scripts.Tiles
         public bool isSelected { get; private set; } = false;
         public bool isHighlightedGreen { get; private set; } = false;
         public bool isHighlightedRed { get; private set; } = false;
+
         private bool _selectionStatusChanged = false;
+        private bool _ownershipChanged = false;
+        private bool _developmentsChanged = false;
+        private bool _unitsChanged = false;
 
         /// <summary>
         /// Returns the stength of the square based on the Units present.
@@ -182,8 +189,8 @@ namespace Scripts.Tiles
             edgeResolver.SetCategoryAndLabel("Selectors", "Black");
 
             PointF pos = TIleUtilities.convertHexIndiciesToCartesianFlatTop(qIndex, rIndex);
-            renderPosX = (_size / 2.0f) * pos.X;
-            renderPosY = (_size / 2.0f) * pos.Y;
+            renderPosX = (_size / 2.0f) * pos.X + renderOffsetX;
+            renderPosY = (_size / 2.0f) * pos.Y + renderOffsetY;
 
             _tileSprite = Instantiate(tileSpritePrefab, new Vector3(renderPosX, renderPosY, 0), Quaternion.identity);
             //Pass the parent to the sprite prefab to allow click event bubbling up.
@@ -218,6 +225,88 @@ namespace Scripts.Tiles
 
                 _selectionStatusChanged = false;
             }
+            if(_ownershipChanged)
+            {
+                switch (TerrainType)
+                {
+                    case TerrainType.Grass:
+                        _terrainCategory = "Grass";
+                        break;
+                    case TerrainType.Mountains:
+                        _terrainCategory = "Mountains";
+                        break;
+                    case TerrainType.Hills:
+                        _terrainCategory = "Hills";
+                        break;
+                    case TerrainType.Swamp:
+                        _terrainCategory = "Swamp";
+                        break;
+                    case TerrainType.Water:
+                        _terrainCategory = "Water";
+                        break;
+                    case TerrainType.Forest:
+                        _terrainCategory = "Forest";
+                        break;
+                }
+
+                string terrainSuffix = "";
+                switch (owner)
+                {
+                    case OwnerType.Good:
+                        terrainSuffix = "Good";
+                        break;
+                    case OwnerType.Evil:
+                        terrainSuffix = "Evil";
+                        break;
+                    case OwnerType.Neutral:
+                        terrainSuffix = "";
+                        break;
+                    default:
+                        terrainSuffix = "";
+                        break;
+                }
+
+
+                //This order matters!
+                _spriteName = _terrainCategory + _terrainVariant.ToString();
+                _terrainCategory += terrainSuffix;
+
+                //Get the sprite resolvers from the prefabs
+                _tileSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel(_terrainCategory, _spriteName);
+
+                _ownershipChanged = false;
+            }
+
+            if(_developmentsChanged)
+            {
+
+                _developmentsChanged = false;
+            }
+            if(_unitsChanged)
+            {
+                _unitsChanged = false;
+
+            }
+        }
+
+        public void ChangeOwnerShip(OwnerType ownerTypeIn)
+        {
+            owner = ownerTypeIn;
+            _ownershipChanged = true;
+
+        }
+
+
+        public void AddTroops(List<Unit> newUnitList)
+        {
+
+
+        }
+
+        public void AddDevelopment(List<UtilityType> newDevelopments, OwnerType newOwner)
+        {
+            ChangeOwnerShip(newOwner);
+            _developmentsChanged = true;
         }
 
         [HideInInspector]    

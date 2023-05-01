@@ -1,9 +1,6 @@
-using Microsoft.Unity.VisualStudio.Editor;
-using System.Collections;
+
 using System.Collections.Generic;
-using System.Drawing;
-using UnityEngine;
-using UnityEngine.U2D.Animation;
+
 
 namespace Scripts.Tiles
 {
