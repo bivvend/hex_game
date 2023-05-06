@@ -6,7 +6,8 @@ using System.Linq;
 using Unity.VisualScripting;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using System.Drawing;
-
+using UnityEngine.U2D.Animation;
+using UnityEngine.UI;
 
 namespace Scripts
 {
@@ -20,6 +21,7 @@ namespace Scripts
         public List<GameObject> unitCards = new List<GameObject>();
 
 
+        private GameObject _topCardTile;
 
         public GameObject baseTilePrefab;
         public GameObject edgePrefab;
@@ -39,6 +41,7 @@ namespace Scripts
             System.Random random = new System.Random();
 
             
+
 
             //Create a circular map of given radius
             for (int q = (-1* (mapRadius +2)); q <= (mapRadius + 2); q++)
@@ -101,7 +104,7 @@ namespace Scripts
                 }
             }
 
-            
+            DeselectCardDisplay();
 
         }
 
@@ -111,6 +114,29 @@ namespace Scripts
             
         }
 
+        void ChangeTopCardDisplay(string category, string spriteName)
+        {
+            _topCardTile = GameObject.Find("TileDeckTopCardImage");
+            var sprite = _topCardTile.GetComponent<SpriteResolver>().spriteLibrary.GetSprite(category, spriteName);
+            var image = _topCardTile.GetComponent<Image>().sprite = sprite;
+
+        }
+
+        void ChangSelectedCardDisplay(HexTile tile)
+        {
+            _topCardTile = GameObject.Find("CurrentTileImage");
+            var sprite = _topCardTile.GetComponent<SpriteResolver>().spriteLibrary.GetSprite(tile.terrainCategory, tile.spriteName);
+            var image = _topCardTile.GetComponent<Image>().sprite = sprite;
+
+        }
+
+        void DeselectCardDisplay()
+        {
+            _topCardTile = GameObject.Find("CurrentTileImage");
+            var sprite = _topCardTile.GetComponent<SpriteResolver>().spriteLibrary.GetSprite("None", "None");
+            var image = _topCardTile.GetComponent<Image>().sprite = sprite;
+
+        }
 
         private void SetupGameState()
         {
@@ -149,7 +175,8 @@ namespace Scripts
         {
             if(CanClick())
             {
-                if(GameState.interactionState == GameStateEnums.InteractionState.PlacingDevelopment)
+                DeselectCardDisplay();
+                if (GameState.interactionState == GameStateEnums.InteractionState.PlacingDevelopment)
                 {
                     GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
                     DeselectAllTiles();
@@ -183,7 +210,7 @@ namespace Scripts
         {
             if (CanClick())
             {
-
+                DeselectCardDisplay();
             }
             else
             {
@@ -198,7 +225,7 @@ namespace Scripts
         {
             if (CanClick())
             {
-
+                DeselectCardDisplay();
             }
             else
             {
@@ -247,6 +274,7 @@ namespace Scripts
                 if(GameState.interactionState == GameStateEnums.InteractionState.SelectTile)
                 {
                     HighlightTile(hexTile);
+                    ChangSelectedCardDisplay(hexTile);
 
                 }
                 else if (GameState.interactionState == GameStateEnums.InteractionState.PlacingDevelopment)
@@ -275,6 +303,7 @@ namespace Scripts
         public void PlaceDevelopmentInTile(HexTile tile, UtilityType utilityType)
         {
             tile.AddDevelopment(new List<UtilityType>(), GameState.PlayerActiveToOwnerType());
+            ChangSelectedCardDisplay(tile);
         }
 
         

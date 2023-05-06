@@ -81,8 +81,8 @@ namespace Scripts.Tiles
         public OwnerType owner = OwnerType.Good;
 
         //Variables used to select sprite 
-        private string _terrainCategory;
-        private string _spriteName;
+        public string terrainCategory;
+        public string spriteName;
         private int _terrainVariant;
 
         //Selection statuses - only set via methods.
@@ -140,22 +140,22 @@ namespace Scripts.Tiles
             switch (TerrainType)
             {
                 case TerrainType.Grass:
-                    _terrainCategory = "Grass";
+                    terrainCategory = "Grass";
                     break;
                 case TerrainType.Mountains:
-                    _terrainCategory = "Mountains";
+                    terrainCategory = "Mountains";
                     break;
                 case TerrainType.Hills:
-                    _terrainCategory = "Hills";
+                    terrainCategory = "Hills";
                     break;
                 case TerrainType.Swamp:
-                    _terrainCategory = "Swamp";
+                    terrainCategory = "Swamp";
                     break;
                 case TerrainType.Water:
-                    _terrainCategory = "Water";
+                    terrainCategory = "Water";
                     break;
                 case TerrainType.Forest:
-                    _terrainCategory = "Forest";
+                    terrainCategory = "Forest";
                     break;
             }
 
@@ -178,12 +178,12 @@ namespace Scripts.Tiles
 
             
             //This order matters!
-            _spriteName = _terrainCategory + _terrainVariant.ToString();
-            _terrainCategory += terrainSuffix;
+            spriteName = terrainCategory + _terrainVariant.ToString();
+            terrainCategory += terrainSuffix;
 
             //Get the sprite resolvers from the prefabs
             spriteResolver = tileSpritePrefab.GetComponent<SpriteResolver>();
-            spriteResolver.SetCategoryAndLabel(_terrainCategory, _spriteName);
+            spriteResolver.SetCategoryAndLabel(terrainCategory, spriteName);
 
             edgeResolver = edgeSpritePrefab.GetComponent<SpriteResolver>();
             edgeResolver.SetCategoryAndLabel("Selectors", "Black");
@@ -230,22 +230,22 @@ namespace Scripts.Tiles
                 switch (TerrainType)
                 {
                     case TerrainType.Grass:
-                        _terrainCategory = "Grass";
+                        terrainCategory = "Grass";
                         break;
                     case TerrainType.Mountains:
-                        _terrainCategory = "Mountains";
+                        terrainCategory = "Mountains";
                         break;
                     case TerrainType.Hills:
-                        _terrainCategory = "Hills";
+                        terrainCategory = "Hills";
                         break;
                     case TerrainType.Swamp:
-                        _terrainCategory = "Swamp";
+                        terrainCategory = "Swamp";
                         break;
                     case TerrainType.Water:
-                        _terrainCategory = "Water";
+                        terrainCategory = "Water";
                         break;
                     case TerrainType.Forest:
-                        _terrainCategory = "Forest";
+                        terrainCategory = "Forest";
                         break;
                 }
 
@@ -268,11 +268,11 @@ namespace Scripts.Tiles
 
 
                 //This order matters!
-                _spriteName = _terrainCategory + _terrainVariant.ToString();
-                _terrainCategory += terrainSuffix;
+                spriteName = terrainCategory + _terrainVariant.ToString();
+                terrainCategory += terrainSuffix;
 
                 //Get the sprite resolvers from the prefabs
-                _tileSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel(_terrainCategory, _spriteName);
+                _tileSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel(terrainCategory, spriteName);
 
                 _ownershipChanged = false;
             }
