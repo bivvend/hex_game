@@ -8,6 +8,8 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 using System.Drawing;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
+using Players;
+using Scripts.Cards;
 
 namespace Scripts
 {
@@ -15,10 +17,9 @@ namespace Scripts
     {
         [HideInInspector]
         public List<GameObject> tiles = new List<GameObject>();
-        [HideInInspector]
-        public List<GameObject> developmentCards = new List<GameObject>();
-        [HideInInspector]
-        public List<GameObject> unitCards = new List<GameObject>();
+
+        public List<DevelopmentCard> developmentCards = new List<DevelopmentCard>();
+        public List<UnitCard> unitCards = new List<UnitCard>();
 
 
         private GameObject _topCardTile;
@@ -31,6 +32,9 @@ namespace Scripts
 
         [HideInInspector]
         public GameState GameState;
+
+        public GameObject GoodPlayer;
+        public GameObject EvilPlayer;
 
         // Start is called before the first frame update
         void Start()
@@ -138,14 +142,27 @@ namespace Scripts
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void SetupGameState()
         {
+            
+            //Define a game state
             GameState = new GameState();
             GameState.SetSelectionState(GameStateEnums.SelectionState.None);
             GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
             GameState.SetAnimationState(GameStateEnums.CurrentAnimationState.None);
             GameState.SetPlayerActive(GameStateEnums.PlayerActive.Good);
             GameState.SetMapMode(GameStateEnums.MapMode.All);
+
+
+            //Setup cards
+            for(int i = 0; i < GameScaling.numberOfCards ; i++)
+            {
+                //Get a development card
+                developmentCards.Add(GameScaling.GetRandomDevelopmentCard());
+            }
 
 
         }

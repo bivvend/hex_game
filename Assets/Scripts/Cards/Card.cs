@@ -6,11 +6,8 @@ using UnityEngine.U2D.Animation;
 namespace Scripts.Cards
 {
 
-    public abstract class Card: MonoBehaviour
+    public abstract class Card
     {
-
-        GameObject spritePrefab;
-        SpriteResolver spriteResolver;
 
         public CardType Type { get; set; }
 
@@ -20,17 +17,6 @@ namespace Scripts.Cards
         {
             Type = type;
             Costs = costs;
-        }
-
-        private void Start()
-        {
-            
-        }
-
-
-        private void Update()
-        {
-            
         }
     }
 }
