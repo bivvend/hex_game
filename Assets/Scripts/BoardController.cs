@@ -8,7 +8,6 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 using System.Drawing;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
-using Players;
 using Scripts.Cards;
 
 namespace Scripts
@@ -109,6 +108,7 @@ namespace Scripts
             }
 
             DeselectCardDisplay();
+            ChangeTopCardDisplay();
 
         }
 
@@ -118,15 +118,65 @@ namespace Scripts
             
         }
 
-        void ChangeTopCardDisplay(string category, string spriteName)
+        void ChangeTopCardDisplay()
         {
+            string category = "";
+            string spriteName = "";
+
+            if (developmentCards.Count > 1) {
+                developmentCards.RemoveAt(0);
+                var card = developmentCards[0];
+                switch (card.developmentType)
+                {
+                    case UtilityType.Mine:
+                        category = "Mine";
+                        spriteName = "Mine" + card.variant.ToString();
+                        break;
+                    case UtilityType.Town:
+                        category = "Town";
+                        spriteName = "Town" + card.variant.ToString();
+                        break;
+                    case UtilityType.QuestSite:
+                        category = "QuestSite";
+                        spriteName = "QuestSite" + card.variant.ToString();
+                        break;
+                    case UtilityType.Farm:
+                        category = "Farm";
+                        spriteName = "Farm" + card.variant.ToString();
+                        break;
+                    case UtilityType.SorcerersTower:
+                        category = "SorcerersTower";
+                        spriteName = "SorcerersTower" + card.variant.ToString();
+                        break;
+                    case UtilityType.Fort:
+                        category = "Fort";
+                        spriteName = "Fort" + card.variant.ToString();
+                        break;
+                    case UtilityType.Capital:
+                        category = "Capital";
+                        spriteName = "Capital" + card.variant.ToString();
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+            else
+            {
+                category = "None";
+                spriteName = "None";
+            }
+
+            
+
+           
             _topCardTile = GameObject.Find("TileDeckTopCardImage");
             var sprite = _topCardTile.GetComponent<SpriteResolver>().spriteLibrary.GetSprite(category, spriteName);
             var image = _topCardTile.GetComponent<Image>().sprite = sprite;
 
         }
 
-        void ChangSelectedCardDisplay(HexTile tile)
+        void ChangeSelectedCardDisplay(HexTile tile)
         {
             _topCardTile = GameObject.Find("CurrentTileImage");
             var sprite = _topCardTile.GetComponent<SpriteResolver>().spriteLibrary.GetSprite(tile.terrainCategory, tile.spriteName);
@@ -190,7 +240,7 @@ namespace Scripts
 
         public void BuildButtonClicked()
         {
-            if(CanClick())
+            if(CanClick() && developmentCards.Count > 0)
             {
                 DeselectCardDisplay();
                 if (GameState.interactionState == GameStateEnums.InteractionState.PlacingDevelopment)
@@ -291,7 +341,7 @@ namespace Scripts
                 if(GameState.interactionState == GameStateEnums.InteractionState.SelectTile)
                 {
                     HighlightTile(hexTile);
-                    ChangSelectedCardDisplay(hexTile);
+                    ChangeSelectedCardDisplay(hexTile);
 
                 }
                 else if (GameState.interactionState == GameStateEnums.InteractionState.PlacingDevelopment)
@@ -319,8 +369,10 @@ namespace Scripts
 
         public void PlaceDevelopmentInTile(HexTile tile, UtilityType utilityType)
         {
-            tile.AddDevelopment(new List<UtilityType>(), GameState.PlayerActiveToOwnerType());
-            ChangSelectedCardDisplay(tile);
+            tile.AddDevelopment(new List<UtilityType>() {utilityType}, GameState.PlayerActiveToOwnerType());
+            ChangeTopCardDisplay();
+            ChangeSelectedCardDisplay(tile);
+           
         }
 
         

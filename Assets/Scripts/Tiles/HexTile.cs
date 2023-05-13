@@ -306,6 +306,7 @@ namespace Scripts.Tiles
         public void AddDevelopment(List<UtilityType> newDevelopments, OwnerType newOwner)
         {
             ChangeOwnerShip(newOwner);
+            Developments.AddRange(newDevelopments);
             _developmentsChanged = true;
         }
 

@@ -8,12 +8,13 @@ namespace Scripts.Cards
 {
     public class DevelopmentCard : Card
     {
-        UtilityType developmentType;
+        public UtilityType developmentType;
+        public int variant = 1;
 
-        public DevelopmentCard(CardType type, UtilityType developmentType, List<Cost> costs) : base(type, costs)
+        public DevelopmentCard(CardType type, UtilityType developmentType, List<Cost> costs, int variant) : base(type, costs)
         {
             this.developmentType = developmentType;
-
+            this.variant = variant;
         }
     }
 }

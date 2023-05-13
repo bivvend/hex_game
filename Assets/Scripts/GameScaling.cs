@@ -71,7 +71,7 @@ namespace Scripts
 
 
         //Card setip
-        public static int numberOfCards = 50;
+        public static int numberOfCards = 51;  //One removed at start
 
 
         //Initial balances
@@ -88,7 +88,7 @@ namespace Scripts
             Array values = Enum.GetValues(typeof(UtilityType));
             UtilityType randomType = (UtilityType)values.GetValue(random.Next(values.Length));
 
-            return new DevelopmentCard(CardType.Development, randomType, developmentPurchaseCostList[randomType]);
+            return new DevelopmentCard(CardType.Development, randomType, developmentPurchaseCostList[randomType], random.Next(1,5));
 
         }
 
