@@ -2396,6 +2396,7 @@ MonoBehaviour:
   edgePrefab: {fileID: 2196787826024370438, guid: ddfb4bbe03d53b44587dcf3117e700dd, type: 3}
   unitsSpritePrefab: {fileID: 0}
   heroSpritePrefab: {fileID: 0}
+  developmentPrefab: {fileID: 0}
   mapRadius: 3
   GoodPlayer: {fileID: 890035601}
   EvilPlayer: {fileID: 2020682120}

@@ -27,6 +27,7 @@ namespace Scripts
         public GameObject edgePrefab;
         public GameObject unitsSpritePrefab;
         public GameObject heroSpritePrefab;
+        public GameObject developmentPrefab;
         public int mapRadius;
 
         [HideInInspector]
@@ -60,6 +61,7 @@ namespace Scripts
                             HexTile t = tile.GetComponent<HexTile>();
                             t.tileSpritePrefab = baseTilePrefab;
                             t.edgeSpritePrefab = edgePrefab;
+                            t.developmentPrefab = developmentPrefab;
                             t.boardController = this;
 
                             TerrainType randomType = (TerrainType)values.GetValue(random.Next(values.Length));

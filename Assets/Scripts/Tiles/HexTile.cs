@@ -13,17 +13,20 @@ namespace Scripts.Tiles
         //Game objects
         //Sprite resolvers allow swapping sprite at runtime
         public SpriteResolver spriteResolver;
+        public SpriteResolver developmentResolver;
         public SpriteResolver edgeResolver;
         public SpriteResolver unitResolver;
         public SpriteResolver heroResolver;
         //Prefabs from editor
         public GameObject tileSpritePrefab;
         public GameObject edgeSpritePrefab;
+        public GameObject developmentPrefab;
         public GameObject unitsSpritePrefab;
         public GameObject heroSpritePrefab;
 
         private GameObject _tileSprite;
         private GameObject _edgeSprite;
+        private GameObject _developmentSprite;
         private GameObject _unitSprite;
         private GameObject _heroSprite;
 
@@ -82,8 +85,11 @@ namespace Scripts.Tiles
 
         //Variables used to select sprite 
         public string terrainCategory;
+        public string developmentCategory;
         public string spriteName;
         private int _terrainVariant;
+
+        private int _developmentVariant;
 
         //Selection statuses - only set via methods.
         public bool isSelected { get; private set; } = false;
@@ -185,6 +191,9 @@ namespace Scripts.Tiles
             spriteResolver = tileSpritePrefab.GetComponent<SpriteResolver>();
             spriteResolver.SetCategoryAndLabel(terrainCategory, spriteName);
 
+            developmentResolver = developmentPrefab.GetComponent<SpriteResolver>();
+            developmentResolver.SetCategoryAndLabel("Town", "Town1");
+
             edgeResolver = edgeSpritePrefab.GetComponent<SpriteResolver>();
             edgeResolver.SetCategoryAndLabel("Selectors", "Black");
 
@@ -195,8 +204,12 @@ namespace Scripts.Tiles
             _tileSprite = Instantiate(tileSpritePrefab, new Vector3(renderPosX, renderPosY, 0), Quaternion.identity);
             //Pass the parent to the sprite prefab to allow click event bubbling up.
             _tileSprite.transform.parent = gameObject.transform;
-            _edgeSprite = Instantiate(edgeSpritePrefab, new Vector3(renderPosX, renderPosY, -0.01f), Quaternion.identity);
+
+            _edgeSprite = Instantiate(edgeSpritePrefab, new Vector3(renderPosX, renderPosY, -0.02f), Quaternion.identity);
             _edgeSprite.transform.parent = gameObject.transform;
+
+            //_developmentSprite = Instantiate(developmentPrefab, new Vector3(renderPosX, renderPosY, -0.01f), Quaternion.identity);
+
 
         }
 
