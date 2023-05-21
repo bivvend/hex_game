@@ -17,62 +17,128 @@ MonoBehaviour:
     m_Hash: 752117914
     m_CategoryList: []
     m_OverrideEntries:
-    - m_Name: Town1
-      m_Hash: 334119301
+    - m_Name: TownGood
+      m_Hash: 342348988
       m_Sprite: {fileID: -1827023496, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
       m_FromMain: 0
       m_SpriteOverride: {fileID: -1827023496, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
-    - m_Name: Town2
-      m_Hash: 182652991
-      m_Sprite: {fileID: -1148180283, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+    - m_Name: TownEvil
+      m_Hash: 890809212
+      m_Sprite: {fileID: 1691814506, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: -1148180283, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
-    - m_Name: Town3
-      m_Hash: 1038360745
-      m_Sprite: {fileID: -1569950297, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -1569950297, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
-    - m_Name: Town4
-      m_Hash: 595637514
-      m_Sprite: {fileID: -40418504, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
-      m_FromMain: 0
-      m_SpriteOverride: {fileID: -40418504, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+      m_SpriteOverride: {fileID: 1691814506, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 4
+    m_EntryOverrideCount: 2
   - m_Name: Mine
     m_Hash: 161119405
     m_CategoryList: []
-    m_OverrideEntries: []
+    m_OverrideEntries:
+    - m_Name: MineGood
+      m_Hash: 122333636
+      m_Sprite: {fileID: -1569950297, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1569950297, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+    - m_Name: MineEvil
+      m_Hash: 641062404
+      m_Sprite: {fileID: -1789486348, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1789486348, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 0
+    m_EntryOverrideCount: 2
   - m_Name: Farm
     m_Hash: 941916027
     m_CategoryList: []
-    m_OverrideEntries: []
+    m_OverrideEntries:
+    - m_Name: FarmGood
+      m_Hash: 766210772
+      m_Sprite: {fileID: -1094323531, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1094323531, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+    - m_Name: FarmEvil
+      m_Hash: 215223572
+      m_Sprite: {fileID: -1797052804, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1797052804, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 0
+    m_EntryOverrideCount: 2
   - m_Name: Fort
     m_Hash: 382859953
     m_CategoryList: []
-    m_OverrideEntries: []
+    m_OverrideEntries:
+    - m_Name: FortGood
+      m_Hash: 275053690
+      m_Sprite: {fileID: -1148180283, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1148180283, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+    - m_Name: FortEvil
+      m_Hash: 823886778
+      m_Sprite: {fileID: -113781886, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -113781886, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 0
+    m_EntryOverrideCount: 2
   - m_Name: Capital
     m_Hash: 1069646650
     m_CategoryList: []
-    m_OverrideEntries: []
+    m_OverrideEntries:
+    - m_Name: CapitalGood
+      m_Hash: 263214386
+      m_Sprite: {fileID: -40418504, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -40418504, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+    - m_Name: CapitalEvil
+      m_Hash: 785328882
+      m_Sprite: {fileID: 1484498178, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1484498178, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 0
+    m_EntryOverrideCount: 2
   - m_Name: SorcerersTower
     m_Hash: 1009597460
     m_CategoryList: []
-    m_OverrideEntries: []
+    m_OverrideEntries:
+    - m_Name: SorcerersTowerGood
+      m_Hash: 119888488
+      m_Sprite: {fileID: 2000806360, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2000806360, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+    - m_Name: SorcerersTowerEvil
+      m_Hash: 643442088
+      m_Sprite: {fileID: -1522869173, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1522869173, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 0
+    m_EntryOverrideCount: 2
   - m_Name: QuestSite
     m_Hash: 399506827
     m_CategoryList: []
-    m_OverrideEntries: []
+    m_OverrideEntries:
+    - m_Name: QuestSiteGood
+      m_Hash: 522697955
+      m_Sprite: {fileID: -1792206156, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1792206156, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
+    - m_Name: QuestSiteEvil
+      m_Hash: 1046004515
+      m_Sprite: {fileID: -1764212933, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1764212933, guid: beb4d6db687316b459cc8b672d7d0bbe, type: 3}
     m_FromMain: 0
-    m_EntryOverrideCount: 0
+    m_EntryOverrideCount: 2
+  - m_Name: None
+    m_Hash: 530755569
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: NoneGood
+      m_Hash: 706059037
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    - m_Name: NoneEvil
+      m_Hash: 191554781
+      m_Sprite: {fileID: 0}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 0}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
   m_PrimaryLibraryGUID: 

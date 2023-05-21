@@ -2284,7 +2284,7 @@ RectTransform:
   m_GameObject: {fileID: 1659028005}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1357209596}
@@ -2292,7 +2292,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -150, y: -367}
+  m_AnchoredPosition: {x: -115, y: -315}
   m_SizeDelta: {x: 150, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1659028007
@@ -2315,7 +2315,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1379055141, guid: bb03b64f02b8f384bae062c54cd4da38, type: 3}
+  m_Sprite: {fileID: -1827023496, guid: 380ada970f03e2a4581a371dbcce7939, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2347,7 +2347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CategoryHash: 2.9846314e-14
   m_labelHash: 8.371318e-18
-  m_SpriteKey: 0.000000010592759
+  m_SpriteKey: 0
 --- !u!114 &1659028010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2361,7 +2361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 1fcbe3c65d7d3274eb50a726f00494e1, type: 3}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 8e910bf4ec08a7243b88fc204efc8bff, type: 3}
 --- !u!1 &1915765891
 GameObject:
   m_ObjectHideFlags: 0
@@ -2396,7 +2396,7 @@ MonoBehaviour:
   edgePrefab: {fileID: 2196787826024370438, guid: ddfb4bbe03d53b44587dcf3117e700dd, type: 3}
   unitsSpritePrefab: {fileID: 0}
   heroSpritePrefab: {fileID: 0}
-  developmentPrefab: {fileID: 0}
+  developmentPrefab: {fileID: 6924935715177847158, guid: 1b0b3424731b2474fa48de5d38a64731, type: 3}
   mapRadius: 3
   GoodPlayer: {fileID: 890035601}
   EvilPlayer: {fileID: 2020682120}

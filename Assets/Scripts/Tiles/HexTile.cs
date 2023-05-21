@@ -1,3 +1,4 @@
+using Scripts.Cards;
 using Scripts.Units;
 using System.Collections;
 using System.Collections.Generic;
@@ -192,7 +193,7 @@ namespace Scripts.Tiles
             spriteResolver.SetCategoryAndLabel(terrainCategory, spriteName);
 
             developmentResolver = developmentPrefab.GetComponent<SpriteResolver>();
-            developmentResolver.SetCategoryAndLabel("Town", "Town1");
+            developmentResolver.SetCategoryAndLabel("None", "NoneGood");
 
             edgeResolver = edgeSpritePrefab.GetComponent<SpriteResolver>();
             edgeResolver.SetCategoryAndLabel("Selectors", "Black");
@@ -208,7 +209,7 @@ namespace Scripts.Tiles
             _edgeSprite = Instantiate(edgeSpritePrefab, new Vector3(renderPosX, renderPosY, -0.02f), Quaternion.identity);
             _edgeSprite.transform.parent = gameObject.transform;
 
-            //_developmentSprite = Instantiate(developmentPrefab, new Vector3(renderPosX, renderPosY, -0.01f), Quaternion.identity);
+            _developmentSprite = Instantiate(developmentPrefab, new Vector3(renderPosX, renderPosY, -0.01f), Quaternion.identity);
 
 
         }
@@ -292,6 +293,56 @@ namespace Scripts.Tiles
 
             if(_developmentsChanged)
             {
+
+                
+                string category = "None";
+                string devSpriteName = "NoneGood";
+                if (Developments.Count > 0)
+                {
+                    string currentOwner = owner == OwnerType.Good ? "Good" : "Evil";
+                    
+                    switch (Developments[0])
+                    {
+                        case UtilityType.Mine:
+                            category = "Mine";
+                            devSpriteName = "Mine" + currentOwner;
+                            break;
+                        case UtilityType.Town:
+                            category = "Town";
+                            devSpriteName = "Town" + currentOwner;
+                            break;
+                        case UtilityType.QuestSite:
+                            category = "QuestSite";
+                            devSpriteName = "QuestSite" + currentOwner;
+                            break;
+                        case UtilityType.Farm:
+                            category = "Farm";
+                            devSpriteName = "Farm" + currentOwner;
+                            break;
+                        case UtilityType.SorcerersTower:
+                            category = "SorcerersTower";
+                            devSpriteName = "SorcerersTower" + currentOwner;
+                            break;
+                        case UtilityType.Fort:
+                            category = "Fort";
+                            devSpriteName = "Fort" + currentOwner;
+                            break;
+                        case UtilityType.Capital:
+                            category = "Capital";
+                            devSpriteName = "Capital" + currentOwner;
+                            break;
+                        default:
+                            break;
+
+                    }
+                }
+                else
+                {
+                    category = "None";
+                    devSpriteName = "NoneGood";
+                }
+
+                _developmentSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel(category, devSpriteName);
 
                 _developmentsChanged = false;
             }

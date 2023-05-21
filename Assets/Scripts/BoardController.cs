@@ -128,35 +128,36 @@ namespace Scripts
             if (developmentCards.Count > 1) {
                 developmentCards.RemoveAt(0);
                 var card = developmentCards[0];
+                string currentOwner = GameState.playerActive == GameStateEnums.PlayerActive.Good ? "Good" : "Evil";
                 switch (card.developmentType)
                 {
                     case UtilityType.Mine:
                         category = "Mine";
-                        spriteName = "Mine" + card.variant.ToString();
+                        spriteName = "Mine" + currentOwner;
                         break;
                     case UtilityType.Town:
                         category = "Town";
-                        spriteName = "Town" + card.variant.ToString();
+                        spriteName = "Town" + currentOwner;
                         break;
                     case UtilityType.QuestSite:
                         category = "QuestSite";
-                        spriteName = "QuestSite" + card.variant.ToString();
+                        spriteName = "QuestSite" + currentOwner;
                         break;
                     case UtilityType.Farm:
                         category = "Farm";
-                        spriteName = "Farm" + card.variant.ToString();
+                        spriteName = "Farm" + currentOwner;
                         break;
                     case UtilityType.SorcerersTower:
                         category = "SorcerersTower";
-                        spriteName = "SorcerersTower" + card.variant.ToString();
+                        spriteName = "SorcerersTower" + currentOwner;
                         break;
                     case UtilityType.Fort:
                         category = "Fort";
-                        spriteName = "Fort" + card.variant.ToString();
+                        spriteName = "Fort" + currentOwner;
                         break;
                     case UtilityType.Capital:
                         category = "Capital";
-                        spriteName = "Capital" + card.variant.ToString();
+                        spriteName = "Capital" + currentOwner;
                         break;
                     default:
                         break;
@@ -166,7 +167,7 @@ namespace Scripts
             else
             {
                 category = "None";
-                spriteName = "None";
+                spriteName = "NoneGood";
             }
 
             
@@ -350,7 +351,7 @@ namespace Scripts
                 {
                    if(hexTile.isHighlightedGreen)
                    {
-                        PlaceDevelopmentInTile(hexTile, UtilityType.Mine);
+                        PlaceDevelopmentInTile(hexTile, developmentCards[0].developmentType);
                         HighlightBuildableTiles(GameState.PlayerActiveToOwnerType(), HighlightColor.Green);
                       
                     }
