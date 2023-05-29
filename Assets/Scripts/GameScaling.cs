@@ -63,6 +63,13 @@ namespace Scripts
 
         };
 
+        //Cost to shuffle cards
+        public static readonly List<Cost> shuffleCost = new List<Cost>
+        {
+            new Cost(ResourceType.Gold, 1)
+
+        };
+
 
         //Adjacency bonuses
 
@@ -76,9 +83,10 @@ namespace Scripts
 
         //Initial balances
         public static List<Cost> initialBalances = new List<Cost>() {
-            new Cost(ResourceType.Food, 2),
+            new Cost(ResourceType.Food, 4),
             new Cost(ResourceType.Gold, 3),
-            new Cost(ResourceType.Metal, 2)
+            new Cost(ResourceType.Metal, 2),
+            new Cost(ResourceType.Mana, 1)
         };
         
 

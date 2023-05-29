@@ -78,10 +78,10 @@ namespace Players
             _balances.Add(new ResourceBalance(ResourceType.Food, 0));
             _balances.Add(new ResourceBalance(ResourceType.Metal, 0));
             _balances.Add(new ResourceBalance(ResourceType.Gold, 0));
-
+            _balances.Add(new ResourceBalance(ResourceType.Mana, 0));
 
             GameScaling.initialBalances.ForEach((b) => {
-                this.AddIncomeToBalance(b);
+                AddIncomeToBalance(b);
             });
 
         }

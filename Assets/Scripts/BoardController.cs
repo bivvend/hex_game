@@ -9,6 +9,8 @@ using System.Drawing;
 using UnityEngine.U2D.Animation;
 using UnityEngine.UI;
 using Scripts.Cards;
+using Players;
+using TMPro;
 
 namespace Scripts
 {
@@ -18,6 +20,9 @@ namespace Scripts
         public List<GameObject> tiles = new List<GameObject>();
 
         public List<DevelopmentCard> developmentCards = new List<DevelopmentCard>();
+
+        private DevelopmentCard _topCard =>  developmentCards[0];
+
         public List<UnitCard> unitCards = new List<UnitCard>();
 
 
@@ -44,11 +49,11 @@ namespace Scripts
             Array values = Enum.GetValues(typeof(TerrainType));
             System.Random random = new System.Random();
 
-            
+
 
 
             //Create a circular map of given radius
-            for (int q = (-1* (mapRadius +2)); q <= (mapRadius + 2); q++)
+            for (int q = (-1 * (mapRadius + 2)); q <= (mapRadius + 2); q++)
             {
                 for (int r = (-1 * (mapRadius + 2)); r <= (mapRadius + 2); r++)
                 {
@@ -65,16 +70,16 @@ namespace Scripts
                             t.boardController = this;
 
                             TerrainType randomType = (TerrainType)values.GetValue(random.Next(values.Length));
-                            if(randomType == TerrainType.Water)
+                            if (randomType == TerrainType.Water)
                             {
                                 randomType = TerrainType.Grass;
-                            }    
+                            }
 
-                            if(Math.Abs(q) == mapRadius + 2 || Math.Abs(r) == mapRadius + 2 || Math.Abs(s) == mapRadius + 2)
+                            if (Math.Abs(q) == mapRadius + 2 || Math.Abs(r) == mapRadius + 2 || Math.Abs(s) == mapRadius + 2)
                             {
                                 randomType = TerrainType.Water;
                             }
-                            if (Math.Abs(q) == mapRadius + 1 || Math.Abs(r) == mapRadius + 1|| Math.Abs(s) == mapRadius + 1)
+                            if (Math.Abs(q) == mapRadius + 1 || Math.Abs(r) == mapRadius + 1 || Math.Abs(s) == mapRadius + 1)
                             {
                                 //Make a rough coast
                                 if (random.Next(0, 2) > 0)
@@ -88,11 +93,11 @@ namespace Scripts
                             t.rIndex = r;
                             t.sIndex = s;
 
-                            if(q > 2)
+                            if (q > 2)
                             {
                                 t.owner = OwnerType.Good;
                             }
-                            else if(q < -2)
+                            else if (q < -2)
                             {
 
                                 t.owner = OwnerType.Evil;
@@ -101,7 +106,7 @@ namespace Scripts
                             {
                                 t.owner = OwnerType.Neutral;
                             }
-                            
+
                             tiles.Add(tile);
                         }
                     }
@@ -117,16 +122,21 @@ namespace Scripts
         // Update is called once per frame
         void Update()
         {
-            
+
         }
 
-        void ChangeTopCardDisplay()
+        void ChangeTopCardDisplay(bool withRemoval = true)
         {
             string category = "";
             string spriteName = "";
 
+            List<Cost> newCosts = new List<Cost>();
+
             if (developmentCards.Count > 1) {
-                developmentCards.RemoveAt(0);
+                if (withRemoval)
+                {
+                    developmentCards.RemoveAt(0);
+                }
                 var card = developmentCards[0];
                 string currentOwner = GameState.playerActive == GameStateEnums.PlayerActive.Good ? "Good" : "Evil";
                 switch (card.developmentType)
@@ -134,30 +144,37 @@ namespace Scripts
                     case UtilityType.Mine:
                         category = "Mine";
                         spriteName = "Mine" + currentOwner;
+                        newCosts = GameScaling.developmentPurchaseCostList[UtilityType.Mine];
                         break;
                     case UtilityType.Town:
                         category = "Town";
                         spriteName = "Town" + currentOwner;
+                        newCosts = GameScaling.developmentPurchaseCostList[UtilityType.Town];
                         break;
                     case UtilityType.QuestSite:
                         category = "QuestSite";
                         spriteName = "QuestSite" + currentOwner;
+                        newCosts = GameScaling.developmentPurchaseCostList[UtilityType.QuestSite];
                         break;
                     case UtilityType.Farm:
                         category = "Farm";
                         spriteName = "Farm" + currentOwner;
+                        newCosts = GameScaling.developmentPurchaseCostList[UtilityType.Farm];
                         break;
                     case UtilityType.SorcerersTower:
                         category = "SorcerersTower";
                         spriteName = "SorcerersTower" + currentOwner;
+                        newCosts = GameScaling.developmentPurchaseCostList[UtilityType.SorcerersTower];
                         break;
                     case UtilityType.Fort:
                         category = "Fort";
                         spriteName = "Fort" + currentOwner;
+                        newCosts = GameScaling.developmentPurchaseCostList[UtilityType.Fort];
                         break;
                     case UtilityType.Capital:
                         category = "Capital";
                         spriteName = "Capital" + currentOwner;
+                        newCosts = GameScaling.developmentPurchaseCostList[UtilityType.Capital];
                         break;
                     default:
                         break;
@@ -170,12 +187,42 @@ namespace Scripts
                 spriteName = "NoneGood";
             }
 
-            
-
-           
             _topCardTile = GameObject.Find("TileDeckTopCardImage");
             var sprite = _topCardTile.GetComponent<SpriteResolver>().spriteLibrary.GetSprite(category, spriteName);
             var image = _topCardTile.GetComponent<Image>().sprite = sprite;
+
+            //Change the displayed costs
+
+            int newMetalCost = 0;
+            int newFoodCost = 0;
+            int newManaCost = 0;
+            int newGoldCost = 0;
+
+            foreach(Cost c in newCosts)
+            {
+                switch(c.costType)
+                {
+                    case ResourceType.Food:
+                        newFoodCost += c.cost;
+                        break;
+                    case ResourceType.Gold:
+                        newGoldCost += c.cost;
+                        break;
+                    case ResourceType.Metal:
+                        newMetalCost += c.cost;
+                        break;
+                    case ResourceType.Mana:
+                        newManaCost += c.cost;
+                        break;
+                }
+            }
+
+            GameObject.Find("GoldCostDisplay").GetComponent<TextMeshProUGUI>().text = newGoldCost.ToString();
+            GameObject.Find("FoodCostDisplay").GetComponent<TextMeshProUGUI>().text = newFoodCost.ToString();
+            GameObject.Find("ManaCostDisplay").GetComponent<TextMeshProUGUI>().text = newManaCost.ToString();
+            GameObject.Find("MetalCostDisplay").GetComponent<TextMeshProUGUI>().text = newMetalCost.ToString();
+
+
 
         }
 
@@ -200,7 +247,7 @@ namespace Scripts
         /// </summary>
         private void SetupGameState()
         {
-            
+
             //Define a game state
             GameState = new GameState();
             GameState.SetSelectionState(GameStateEnums.SelectionState.None);
@@ -211,7 +258,7 @@ namespace Scripts
 
 
             //Setup cards
-            for(int i = 0; i < GameScaling.numberOfCards ; i++)
+            for (int i = 0; i < GameScaling.numberOfCards; i++)
             {
                 //Get a development card
                 developmentCards.Add(GameScaling.GetRandomDevelopmentCard());
@@ -243,25 +290,31 @@ namespace Scripts
 
         public void BuildButtonClicked()
         {
-            if(CanClick() && developmentCards.Count > 0)
+            if (CanClick() && developmentCards.Count > 0)
             {
                 DeselectCardDisplay();
                 if (GameState.interactionState == GameStateEnums.InteractionState.PlacingDevelopment)
                 {
+
                     GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
                     DeselectAllTiles();
+                 
                 }
                 else
                 {
-                    GameState.SetInteractionState(GameStateEnums.InteractionState.PlacingDevelopment);
-                    DeselectAllTiles();
-                    if (GameState.playerActive == GameStateEnums.PlayerActive.Good)
+                    if (CanAffordCost(_topCard.Costs, GameState.playerActive))
                     {
-                        HighlightBuildableTiles(OwnerType.Good, HighlightColor.Green) ;
-                    }
-                    else
-                    {
-                        HighlightBuildableTiles(OwnerType.Evil, HighlightColor.Green);
+
+                        GameState.SetInteractionState(GameStateEnums.InteractionState.PlacingDevelopment);
+                        DeselectAllTiles();
+                        if (GameState.playerActive == GameStateEnums.PlayerActive.Good)
+                        {
+                            HighlightBuildableTiles(OwnerType.Good, HighlightColor.Green);
+                        }
+                        else
+                        {
+                            HighlightBuildableTiles(OwnerType.Evil, HighlightColor.Green);
+                        }
                     }
 
 
@@ -295,12 +348,51 @@ namespace Scripts
         {
             if (CanClick())
             {
-                DeselectCardDisplay();
+                if (CanAffordCost(GameScaling.shuffleCost, GameState.playerActive))
+                {
+                    DeselectCardDisplay();
+                    //Check the player can afford to shuffle
+
+                    //Shuffle the cards
+                    System.Random rng = new System.Random();
+                    int n = developmentCards.Count;
+                    while (n > 1)
+                    {
+                        n--;
+                        int k = rng.Next(n + 1);
+                        var value = developmentCards[k];
+                        developmentCards[k] = developmentCards[n];
+                        developmentCards[n] = value;
+                    }
+
+                    //Display the new top card
+                    ChangeTopCardDisplay(withRemoval: false);
+                    //Charge the player for the costs
+                    RemoveCostsFromPlayer(GameScaling.shuffleCost, GameState.playerActive);
+
+                }
             }
             else
             {
                 Debug.Log("Clicked when inactive!");
 
+            }
+
+        }
+
+        void RemoveCostsFromPlayer(List<Cost> costs, GameStateEnums.PlayerActive playerActive)
+        {
+            foreach (Cost c in costs)
+            {
+                if (playerActive == GameStateEnums.PlayerActive.Evil)
+                {
+                    EvilPlayer.GetComponent<Player>().RemoveCostFromBalance(c);
+                    
+                }
+                else
+                {
+                    GoodPlayer.GetComponent<Player>().RemoveCostFromBalance(c);
+                }
             }
 
         }
@@ -313,6 +405,7 @@ namespace Scripts
                 DeselectAllTiles();
                 GameState.SetPlayerActive(GetNextPlayer());
                 GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
+                ChangeTopCardDisplay(withRemoval:false);
             }
             else
             {
@@ -351,8 +444,27 @@ namespace Scripts
                 {
                    if(hexTile.isHighlightedGreen)
                    {
-                        PlaceDevelopmentInTile(hexTile, developmentCards[0].developmentType);
-                        HighlightBuildableTiles(GameState.PlayerActiveToOwnerType(), HighlightColor.Green);
+                        if (CanAffordCost(_topCard.Costs, GameState.playerActive))
+                        {
+                            RemoveCostsFromPlayer(_topCard.Costs, GameState.playerActive);
+                            PlaceDevelopmentInTile(hexTile, developmentCards[0].developmentType); //This will flip to next card
+
+                            if(CanAffordCost(_topCard.Costs, GameState.playerActive))
+                            {
+                                HighlightBuildableTiles(GameState.PlayerActiveToOwnerType(), HighlightColor.Green);
+                            }
+                            else
+                            {
+                                GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
+                                DeselectAllTiles();
+
+                            }
+                            
+                            
+                        }
+                        
+                        
+                        
                       
                     }
                 }
@@ -376,6 +488,35 @@ namespace Scripts
             ChangeTopCardDisplay();
             ChangeSelectedCardDisplay(tile);
            
+        }
+
+        public bool CanAffordCost(List<Cost> costs, GameStateEnums.PlayerActive playerActive)
+        {
+            bool canAfford = true;
+
+            
+
+            foreach(Cost c in costs)
+            {
+                if (playerActive == GameStateEnums.PlayerActive.Evil)
+                {
+                    if(EvilPlayer.GetComponent<Player>().GetBalance(c.costType).balance < c.cost)
+                    {
+                        canAfford = false;
+                    }
+                }
+                else
+                {
+                    if (GoodPlayer.GetComponent<Player>().GetBalance(c.costType).balance < c.cost)
+                    {
+                        canAfford = false;
+                    }
+                }
+            }
+
+
+            return canAfford;
+
         }
 
         
