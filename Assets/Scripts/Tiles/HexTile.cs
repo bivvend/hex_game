@@ -58,7 +58,7 @@ namespace Scripts.Tiles
         public TerrainType TerrainType;
         //List of 6 utility types one for each side
         [HideInInspector]
-        public List<UtilityType> Developments { get; private set; } = new();
+        public List<UtilityType> Developments { get; set; } = new();
         [HideInInspector]
         public List<Unit> Units { get; private set; } = new();
 
@@ -97,10 +97,10 @@ namespace Scripts.Tiles
         public bool isHighlightedGreen { get; private set; } = false;
         public bool isHighlightedRed { get; private set; } = false;
 
-        private bool _selectionStatusChanged = false;
-        private bool _ownershipChanged = false;
-        private bool _developmentsChanged = false;
-        private bool _unitsChanged = false;
+        private bool _selectionStatusChanged = true;
+        private bool _ownershipChanged = true;
+        private bool _developmentsChanged = true;
+        private bool _unitsChanged = true;
 
         /// <summary>
         /// Returns the stength of the square based on the Units present.

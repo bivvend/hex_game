@@ -27,7 +27,7 @@ namespace Scripts
         public static readonly Dictionary<UtilityType, List<Cost>> developmentPurchaseCostList = new Dictionary<UtilityType, List<Cost>>()
         {
             {UtilityType.Mine, new List<Cost>(){new Cost(ResourceType.Gold, 1)} },
-            {UtilityType.Capital, new List<Cost>(){ new Cost(ResourceType.Gold, 1000) } },
+            {UtilityType.Capital, new List<Cost>(){ new Cost(ResourceType.Gold, 0) } },
             {UtilityType.Fort, new List<Cost>(){ new Cost(ResourceType.Gold, 2), new Cost(ResourceType.Metal, 2) } },
             {UtilityType.Town, new List<Cost>(){ new Cost(ResourceType.Gold, 2), new Cost(ResourceType.Metal, 2), new Cost(ResourceType.Food, 2) } },
             {UtilityType.Farm, new List<Cost>(){ new Cost(ResourceType.Gold, 1), new Cost(ResourceType.Metal, 1) } },
@@ -66,7 +66,7 @@ namespace Scripts
         //Cost to shuffle cards
         public static readonly List<Cost> shuffleCost = new List<Cost>
         {
-            new Cost(ResourceType.Gold, 1)
+            new Cost(ResourceType.Gold, 0)
 
         };
 

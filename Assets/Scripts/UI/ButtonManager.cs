@@ -44,6 +44,12 @@ public class ButtonManager : MonoBehaviour
         boardController.EndTurnButtonClicked();
     }
 
+    public void OnStartGameButtonClicked()
+    {
+        boardController.SetupInitialPlayerLands();
+        GameObject.Find("StartGameButton").SetActive(false);
+    }
+
 
     
 }

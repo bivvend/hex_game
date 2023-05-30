@@ -11,6 +11,8 @@ using UnityEngine.UI;
 using Scripts.Cards;
 using Players;
 using TMPro;
+using static Scripts.GameStateEnums;
+using UnityEngine.U2D;
 
 namespace Scripts
 {
@@ -41,6 +43,10 @@ namespace Scripts
         public GameObject GoodPlayer;
         public GameObject EvilPlayer;
 
+        private GameObject _currentPlayer => GameState.playerActive == PlayerActive.Good ? GoodPlayer: EvilPlayer;
+
+        private bool _afterFirstFrame = false;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -48,9 +54,6 @@ namespace Scripts
 
             Array values = Enum.GetValues(typeof(TerrainType));
             System.Random random = new System.Random();
-
-
-
 
             //Create a circular map of given radius
             for (int q = (-1 * (mapRadius + 2)); q <= (mapRadius + 2); q++)
@@ -92,19 +95,20 @@ namespace Scripts
                             t.qIndex = q;
                             t.rIndex = r;
                             t.sIndex = s;
+                            t.owner = OwnerType.Neutral;
 
-                            if (q > 2)
+                            if (r == 0 && q == mapRadius && s == -1 * mapRadius)
                             {
-                                t.owner = OwnerType.Good;
+                                //t.ChangeOwnerShip(OwnerType.Good);
+                                t.TerrainType = TerrainType.Grass;
+                                //t.AddDevelopment(new List<UtilityType>() { UtilityType.Capital }, OwnerType.Good);
                             }
-                            else if (q < -2)
+                            if (r == 0 && q == -1 * mapRadius && s == mapRadius)
                             {
 
-                                t.owner = OwnerType.Evil;
-                            }
-                            else
-                            {
-                                t.owner = OwnerType.Neutral;
+                                //t.ChangeOwnerShip(OwnerType.Evil);
+                                t.TerrainType = TerrainType.Grass;
+                                //t.AddDevelopment(new List<UtilityType>() { UtilityType.Capital }, OwnerType.Evil);
                             }
 
                             tiles.Add(tile);
@@ -122,8 +126,83 @@ namespace Scripts
         // Update is called once per frame
         void Update()
         {
+            if(!_afterFirstFrame)
+            {
+                _afterFirstFrame = true;
+            }
+        }
+
+        public void SetupInitialPlayerLands()
+        {
+            int r = 0;
+            int q = 0;
+            int s = 0;
+            tiles.ForEach((tile) =>
+            {
+                //Place capitals
+                HexTile t = tile.GetComponent<HexTile>();
+                r = t.rIndex;
+                q = t.qIndex;
+                s = t.sIndex;
+
+                if (r == 0 && q == mapRadius && s == -1 * mapRadius)
+                {
+                    t.ChangeOwnerShip(OwnerType.Good);
+                    t.TerrainType = TerrainType.Grass;
+                    t.AddDevelopment(new List<UtilityType>() { UtilityType.Capital }, OwnerType.Good);
+                }
+                if (r == 0 && q == -1 * mapRadius && s == mapRadius)
+                {
+
+                    t.ChangeOwnerShip(OwnerType.Evil);
+                    t.TerrainType = TerrainType.Grass;
+                    t.AddDevelopment( new List<UtilityType>() { UtilityType.Capital }, OwnerType.Evil);
+                }
+
+
+            });
+            
+        }
+
+
+        private void AddIncomes()
+        {
+            //Find all tiles of the current player
+            List<HexTileLite> matchedTiles = new();
+            List<HexTileLite> buildableTiles = new();
+            var liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+
+            OwnerType ownerType = _currentPlayer.GetComponent<Player>().ownerType;
+
+            List<(object, object)> positiveConditions = new();
+            List<(object, object)> negativeConditions = new();
+            positiveConditions.Add((ownerType, ownerType));
+            negativeConditions.Add((TerrainType.Water, TerrainType.Water));
+            //Get all tiles of that owner
+            matchedTiles = TIleUtilities.FilterTilesByListOfGenericConditions(liteList, positiveConditions, negativeConditions);
+
+            List<Cost> incomes = new();
+
+            matchedTiles.ForEach((t) =>
+            {
+                t.Developments.ForEach((d) =>
+                {
+                    incomes.AddRange(GameScaling.developmentBaseIncomeList[d]);
+                });
+
+            });
+
+            incomes.ForEach((i) =>
+            {
+                _currentPlayer.GetComponent<Player>().AddIncomeToBalance(i);
+
+            });
+            
+
 
         }
+
+        
 
         void ChangeTopCardDisplay(bool withRemoval = true)
         {
@@ -402,6 +481,7 @@ namespace Scripts
         {
             if (CanClick())
             {
+                AddIncomes();
                 DeselectAllTiles();
                 GameState.SetPlayerActive(GetNextPlayer());
                 GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
