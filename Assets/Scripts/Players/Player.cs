@@ -52,6 +52,8 @@ namespace Players
             }
         }
 
+
+
         /// <summary>
         /// Get the balance of a resource
         /// </summary>

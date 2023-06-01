@@ -161,7 +161,184 @@ namespace Scripts
 
 
             });
+
+            UpdateIncomeDisplay();
+
+
+        }
+
+        List<HexTileLite> GetPlayersTiles(OwnerType ownerType)
+        {
+            List<HexTileLite> matchedTiles = new();
+            var liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+
+            List<(object, object)> positiveConditions = new();
+            List<(object, object)> negativeConditions = new();
+            positiveConditions.Add((ownerType, ownerType));
+            negativeConditions.Add((TerrainType.Water, TerrainType.Water));
+            //Get all tiles of that owner
+            matchedTiles = TIleUtilities.FilterTilesByListOfGenericConditions(liteList, positiveConditions, negativeConditions);
+
+            return matchedTiles;
+        }
+
+        void UpdateIncomeDisplay()
+        {
+
+            //Find all tiles of both players
+            //Good
+            List<HexTileLite> matchedTiles = new();
+
+            List<OwnerType> owners = new List<OwnerType>(){ OwnerType.Good, OwnerType.Evil };
+
+            int goldIncrease = 0;
+            int foodIncrease = 0;
+            int metalIncrease = 0;
+            int manaIncrease = 0;
+
+            List<Cost> incomes = new();
+            List<Cost> tileUpkeeps = new();
+            List<Cost> unitUpkeeps = new();
+            string metalSign = "+";
+            string foodSign = "+";
+            string manaSign = "+";
+            string goldSign = "+";
+
+            owners.ForEach((o) =>
+            {
+                
+                goldIncrease = 0;
+                foodIncrease = 0;
+                metalIncrease = 0;
+                manaIncrease = 0;
+
+                matchedTiles = GetPlayersTiles(o);
+
+                incomes = new();
+                tileUpkeeps = new();
+                unitUpkeeps = new();
+
+
+
+                matchedTiles.ForEach((t) =>
+                {
+                    t.Developments.ForEach((d) =>
+                    {
+                        incomes.AddRange(GameScaling.developmentBaseIncomeList[d]);
+                        tileUpkeeps.AddRange(GameScaling.developmentUpkeepList[d]);
+                    });
+
+                });
+
+                
+
+                incomes.ForEach((i) =>
+                {
+                    switch (i.costType)
+                    {
+                        case ResourceType.Food:
+                            foodIncrease += i.cost;
+                            break;
+                        case ResourceType.Metal:
+                            metalIncrease += i.cost;
+                            break;
+                        case ResourceType.Mana:
+                            manaIncrease += i.cost;
+                            break;
+                        case ResourceType.Gold:
+                            goldIncrease += i.cost;
+                            break;
+
+                    }
+
+                });
+
+                tileUpkeeps.ForEach((i) =>
+                {
+                    switch (i.costType)
+                    {
+                        case ResourceType.Food:
+                            foodIncrease -= i.cost;
+                            break;
+                        case ResourceType.Metal:
+                            metalIncrease -= i.cost;
+                            break;
+                        case ResourceType.Mana:
+                            manaIncrease -= i.cost;
+                            break;
+                        case ResourceType.Gold:
+                            goldIncrease -= i.cost;
+                            break;
+
+                    }
+
+                });
+
+                unitUpkeeps.ForEach((i) =>
+                {
+
+
+                });
+
+                //Update the displays
+                if(goldIncrease >=0)
+                {
+                    goldSign = "+";
+                }
+                else
+                {
+                    goldSign = "-";
+                }
+
+                if (manaIncrease >= 0)
+                {
+                    manaSign = "+";
+                }
+                else
+                {
+                    manaSign= "-";
+                }
+
+                if (foodIncrease >= 0)
+                {
+                    foodSign = "+";
+                }
+                else
+                {
+                    foodSign = "-";
+                }
+
+                if (metalIncrease >= 0)
+                {
+                    metalSign = "+";
+                }
+                else
+                {
+                    metalSign= "-";
+                }
+
+                if (o == OwnerType.Good)
+                {
+                    GameObject.Find("GoodPlayerGoldIncome").GetComponent<TextMeshProUGUI>().text = goldSign + " " + goldIncrease.ToString();
+                    GameObject.Find("GoodPlayerFoodIncome").GetComponent<TextMeshProUGUI>().text = foodSign + " " + foodIncrease.ToString();
+                    GameObject.Find("GoodPlayerMetalIncome").GetComponent<TextMeshProUGUI>().text = metalSign + " " + metalIncrease.ToString();
+                    GameObject.Find("GoodPlayerManaIncome").GetComponent<TextMeshProUGUI>().text = manaSign + " " + manaIncrease.ToString();
+
+                }
+                else
+                {
+                    GameObject.Find("EvilPlayerGoldIncome").GetComponent<TextMeshProUGUI>().text = goldSign + " " + goldIncrease.ToString();
+                    GameObject.Find("EvilPlayerFoodIncome").GetComponent<TextMeshProUGUI>().text = foodSign + " " + foodIncrease.ToString();
+                    GameObject.Find("EvilPlayerMetalIncome").GetComponent<TextMeshProUGUI>().text = metalSign + " " + metalIncrease.ToString();
+                    GameObject.Find("EvilPlayerManaIncome").GetComponent<TextMeshProUGUI>().text = manaSign + " " + manaIncrease.ToString();
+                }
+
+            });
+
+
             
+
+
         }
 
 
@@ -182,12 +359,15 @@ namespace Scripts
             matchedTiles = TIleUtilities.FilterTilesByListOfGenericConditions(liteList, positiveConditions, negativeConditions);
 
             List<Cost> incomes = new();
+            List<Cost> tileUpkeeps = new();
+            List<Cost> unitUpkeeps = new();
 
             matchedTiles.ForEach((t) =>
             {
                 t.Developments.ForEach((d) =>
                 {
                     incomes.AddRange(GameScaling.developmentBaseIncomeList[d]);
+                    tileUpkeeps.AddRange(GameScaling.developmentUpkeepList[d]);
                 });
 
             });
@@ -197,12 +377,25 @@ namespace Scripts
                 _currentPlayer.GetComponent<Player>().AddIncomeToBalance(i);
 
             });
-            
 
+            tileUpkeeps.ForEach((i) =>
+            {
+                _currentPlayer.GetComponent<Player>().RemoveCostFromBalance(i);
+
+            });
+
+            unitUpkeeps.ForEach((i) =>
+            {
+
+
+            });
+
+           
 
         }
 
-        
+
+
 
         void ChangeTopCardDisplay(bool withRemoval = true)
         {
@@ -567,7 +760,9 @@ namespace Scripts
             tile.AddDevelopment(new List<UtilityType>() {utilityType}, GameState.PlayerActiveToOwnerType());
             ChangeTopCardDisplay();
             ChangeSelectedCardDisplay(tile);
-           
+            UpdateIncomeDisplay();
+
+
         }
 
         public bool CanAffordCost(List<Cost> costs, GameStateEnums.PlayerActive playerActive)
