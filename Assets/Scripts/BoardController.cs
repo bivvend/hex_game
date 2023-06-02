@@ -13,6 +13,10 @@ using Players;
 using TMPro;
 using static Scripts.GameStateEnums;
 using UnityEngine.U2D;
+using Scripts.Units;
+using static Scripts.Units.UnitEnums;
+using Unit = Scripts.Units.Unit;
+using Wizard = Scripts.Units.Wizard;
 
 namespace Scripts
 {
@@ -70,6 +74,8 @@ namespace Scripts
                             t.tileSpritePrefab = baseTilePrefab;
                             t.edgeSpritePrefab = edgePrefab;
                             t.developmentPrefab = developmentPrefab;
+                            t.unitsSpritePrefab = unitsSpritePrefab;
+                            t.heroSpritePrefab = unitsSpritePrefab;
                             t.boardController = this;
 
                             TerrainType randomType = (TerrainType)values.GetValue(random.Next(values.Length));
@@ -605,7 +611,32 @@ namespace Scripts
         {
             if (CanClick())
             {
-                DeselectCardDisplay();
+                if (GameState.interactionState == GameStateEnums.InteractionState.PlacingUnit)
+                {
+
+                    GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
+                    DeselectAllTiles();
+
+                }
+                else
+                {
+                    if (true)
+                    {
+
+                        GameState.SetInteractionState(GameStateEnums.InteractionState.PlacingUnit);
+                        DeselectAllTiles();
+                        if (GameState.playerActive == GameStateEnums.PlayerActive.Good)
+                        {
+                            HighlightPlayersTiles(OwnerType.Good, HighlightColor.Red);
+                        }
+                        else
+                        {
+                            HighlightPlayersTiles(OwnerType.Evil, HighlightColor.Red);
+                        }
+                    }
+
+
+                }
             }
             else
             {
@@ -741,6 +772,34 @@ namespace Scripts
                       
                     }
                 }
+                else if (GameState.interactionState == GameStateEnums.InteractionState.PlacingUnit)
+                {
+                    if (hexTile.isHighlightedRed)
+                    {
+                        if (true)
+                        {
+                            //RemoveCostsFromPlayer(_topCard.Costs, GameState.playerActive);
+                            PlaceUnitInTile(hexTile, UnitType.NormalWarrior); 
+
+                            if (true)
+                            {
+                                HighlightPlayersTiles(GameState.PlayerActiveToOwnerType(), HighlightColor.Red);
+                            }
+                            else
+                            {
+                                GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
+                                DeselectAllTiles();
+
+                            }
+
+
+                        }
+
+
+
+
+                    }
+                }
 
 
             }
@@ -753,6 +812,35 @@ namespace Scripts
 
             //HighlightBuildableTiles(OwnerType.Good, HighlightColor.Green);
 
+        }
+
+        public void PlaceUnitInTile(HexTile tile, UnitType unitType)
+        {
+            Unit unit = null;
+            switch (unitType)
+            {
+                case UnitType.NormalWarrior:
+                    unit = new Warrior();
+                    break;
+                case UnitType.LargeWarrior:
+                    unit = new LargeWarrior();
+                    break;
+                case UnitType.VeryLargeWarrior:
+                    unit = new VerylargeWarrior();
+                    break;
+                case UnitType.Hero:
+                    unit = new Hero();
+                    break;
+                case UnitType.Wizard: 
+                    unit = new Wizard();
+                    break;
+                case UnitType.General:
+                    unit = new General();
+                    break;
+            }
+            tile.AddTroops(new List<Unit>() { unit });
+            ChangeSelectedCardDisplay(tile);
+            UpdateIncomeDisplay();
         }
 
         public void PlaceDevelopmentInTile(HexTile tile, UtilityType utilityType)
@@ -805,6 +893,58 @@ namespace Scripts
                 tile.ChangeHighlightGreenStatus(false);
                 tile.ChangeHighlightRedStatus(false);
                 tile.ChangeSelectionStatus(false);
+
+            });
+
+        }
+
+        public void HighlightPlayersTiles(OwnerType ownerType, HighlightColor colour)
+        {
+            List<HexTileLite> matchedTiles = new();
+            List<HexTileLite> buildableTiles = new();
+            var liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+
+            List<(object, object)> positiveConditions = new();
+            List<(object, object)> negativeConditions = new();
+            positiveConditions.Add((ownerType, ownerType));
+            negativeConditions.Add((TerrainType.Water, TerrainType.Water));
+            //Get all tiles of that owner
+            matchedTiles = TIleUtilities.FilterTilesByListOfGenericConditions(liteList, positiveConditions, negativeConditions);
+
+           
+            bool found = false;
+            tiles.ForEach((t) =>
+            {
+                var tile = t.GetComponent<HexTile>();
+                found = false;
+                matchedTiles.ForEach((tN) =>
+                {
+                    if (tN.qIndex == tile.qIndex && tN.rIndex == tile.rIndex && tN.sIndex == tile.sIndex)
+                    {
+                        found = true;
+                    }
+                });
+                if (found)
+                {
+                    switch (colour)
+                    {
+                        case HighlightColor.Green:
+                            tile.ChangeHighlightGreenStatus(true);
+                            break;
+
+                        case HighlightColor.Red:
+                            tile.ChangeHighlightRedStatus(true);
+                            break;
+
+                    }
+
+                }
+                else
+                {
+                    tile.ChangeHighlightGreenStatus(false);
+                    tile.ChangeHighlightRedStatus(false);
+
+                }
 
             });
 

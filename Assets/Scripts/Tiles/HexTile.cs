@@ -195,6 +195,9 @@ namespace Scripts.Tiles
             developmentResolver = developmentPrefab.GetComponent<SpriteResolver>();
             developmentResolver.SetCategoryAndLabel("None", "NoneGood");
 
+            unitResolver = unitsSpritePrefab.GetComponent<SpriteResolver>();
+            unitResolver.SetCategoryAndLabel("None", "None");
+
             edgeResolver = edgeSpritePrefab.GetComponent<SpriteResolver>();
             edgeResolver.SetCategoryAndLabel("Selectors", "Black");
 
@@ -210,6 +213,8 @@ namespace Scripts.Tiles
             _edgeSprite.transform.parent = gameObject.transform;
 
             _developmentSprite = Instantiate(developmentPrefab, new Vector3(renderPosX, renderPosY, -0.01f), Quaternion.identity);
+
+            _unitSprite = Instantiate(unitsSpritePrefab, new Vector3(renderPosX + 0.3f, renderPosY+ 0.3f, -0.1f), Quaternion.identity);
 
 
         }
@@ -350,6 +355,22 @@ namespace Scripts.Tiles
             {
                 _unitsChanged = false;
 
+                string currentOwner = owner == OwnerType.Good ? "Good" : "Evil";
+
+                if (hasUnits)
+                {
+                    _unitSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel(currentOwner, "Warrior");
+
+                }
+                else
+                {
+                    _unitSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel("None", "None");
+                }
+
+                
+
+                _unitsChanged = false;
+
             }
         }
 
@@ -363,7 +384,8 @@ namespace Scripts.Tiles
 
         public void AddTroops(List<Unit> newUnitList)
         {
-
+            Units.AddRange(newUnitList);
+            _unitsChanged = true;
 
         }
 

@@ -4785,8 +4785,8 @@ MonoBehaviour:
   tiles: []
   baseTilePrefab: {fileID: 6924935715177847158, guid: 18689233625fa9647aa52e38578c7c52, type: 3}
   edgePrefab: {fileID: 2196787826024370438, guid: ddfb4bbe03d53b44587dcf3117e700dd, type: 3}
-  unitsSpritePrefab: {fileID: 0}
-  heroSpritePrefab: {fileID: 0}
+  unitsSpritePrefab: {fileID: 6274019795399971330, guid: ae08649601c558146b65089a7ca890a5, type: 3}
+  heroSpritePrefab: {fileID: 6274019795399971330, guid: ae08649601c558146b65089a7ca890a5, type: 3}
   developmentPrefab: {fileID: 6924935715177847158, guid: 1b0b3424731b2474fa48de5d38a64731, type: 3}
   mapRadius: 3
   GoodPlayer: {fileID: 890035601}
