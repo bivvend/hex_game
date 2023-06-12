@@ -234,6 +234,19 @@ namespace Scripts
                         tileUpkeeps.AddRange(GameScaling.developmentUpkeepList[d]);
                     });
 
+                    if (t.hasUnits)
+                    {
+                        t.Units.ForEach((u) =>
+                        {
+                            int count = u.GetNumberOfTroops();
+                            var costs = GameScaling.unitUpkeepList[u.unitType];
+                            var allCost = costs.Select((c) => new Cost(c.costType, c.cost * count)).ToList();
+                            unitUpkeeps.AddRange(allCost);
+
+                        });
+
+                    }
+
                 });
 
                 
@@ -282,7 +295,22 @@ namespace Scripts
 
                 unitUpkeeps.ForEach((i) =>
                 {
+                    switch (i.costType)
+                    {
+                        case ResourceType.Food:
+                            foodIncrease -= i.cost;
+                            break;
+                        case ResourceType.Metal:
+                            metalIncrease -= i.cost;
+                            break;
+                        case ResourceType.Mana:
+                            manaIncrease -= i.cost;
+                            break;
+                        case ResourceType.Gold:
+                            goldIncrease -= i.cost;
+                            break;
 
+                    }
 
                 });
 
@@ -325,18 +353,18 @@ namespace Scripts
 
                 if (o == OwnerType.Good)
                 {
-                    GameObject.Find("GoodPlayerGoldIncome").GetComponent<TextMeshProUGUI>().text = goldSign + " " + goldIncrease.ToString();
-                    GameObject.Find("GoodPlayerFoodIncome").GetComponent<TextMeshProUGUI>().text = foodSign + " " + foodIncrease.ToString();
-                    GameObject.Find("GoodPlayerMetalIncome").GetComponent<TextMeshProUGUI>().text = metalSign + " " + metalIncrease.ToString();
-                    GameObject.Find("GoodPlayerManaIncome").GetComponent<TextMeshProUGUI>().text = manaSign + " " + manaIncrease.ToString();
+                    GameObject.Find("GoodPlayerGoldIncome").GetComponent<TextMeshProUGUI>().text = goldSign + " " + Math.Abs(goldIncrease).ToString();
+                    GameObject.Find("GoodPlayerFoodIncome").GetComponent<TextMeshProUGUI>().text = foodSign + " " + Math.Abs(foodIncrease).ToString();
+                    GameObject.Find("GoodPlayerMetalIncome").GetComponent<TextMeshProUGUI>().text = metalSign + " " + Math.Abs(metalIncrease).ToString();
+                    GameObject.Find("GoodPlayerManaIncome").GetComponent<TextMeshProUGUI>().text = manaSign + " " + Math.Abs(manaIncrease).ToString();
 
                 }
                 else
                 {
-                    GameObject.Find("EvilPlayerGoldIncome").GetComponent<TextMeshProUGUI>().text = goldSign + " " + goldIncrease.ToString();
-                    GameObject.Find("EvilPlayerFoodIncome").GetComponent<TextMeshProUGUI>().text = foodSign + " " + foodIncrease.ToString();
-                    GameObject.Find("EvilPlayerMetalIncome").GetComponent<TextMeshProUGUI>().text = metalSign + " " + metalIncrease.ToString();
-                    GameObject.Find("EvilPlayerManaIncome").GetComponent<TextMeshProUGUI>().text = manaSign + " " + manaIncrease.ToString();
+                    GameObject.Find("EvilPlayerGoldIncome").GetComponent<TextMeshProUGUI>().text = goldSign + " " + Math.Abs(goldIncrease).ToString();
+                    GameObject.Find("EvilPlayerFoodIncome").GetComponent<TextMeshProUGUI>().text = foodSign + " " + Math.Abs(foodIncrease).ToString();
+                    GameObject.Find("EvilPlayerMetalIncome").GetComponent<TextMeshProUGUI>().text = metalSign + " " + Math.Abs(metalIncrease).ToString();
+                    GameObject.Find("EvilPlayerManaIncome").GetComponent<TextMeshProUGUI>().text = manaSign + " " + Math.Abs(manaIncrease).ToString();
                 }
 
             });
@@ -376,6 +404,19 @@ namespace Scripts
                     tileUpkeeps.AddRange(GameScaling.developmentUpkeepList[d]);
                 });
 
+                if (t.hasUnits)
+                {
+                    t.Units.ForEach((u) =>
+                    {
+                        int count = u.GetNumberOfTroops();
+                        var costs = GameScaling.unitUpkeepList[u.unitType];
+                        var allCost = costs.Select((c) => new Cost(c.costType, c.cost * count)).ToList();
+                        unitUpkeeps.AddRange(allCost);
+
+                    });
+
+                }
+
             });
 
             incomes.ForEach((i) =>
@@ -392,7 +433,7 @@ namespace Scripts
 
             unitUpkeeps.ForEach((i) =>
             {
-
+                _currentPlayer.GetComponent<Player>().RemoveCostFromBalance(i);
 
             });
 
@@ -776,9 +817,9 @@ namespace Scripts
                 {
                     if (hexTile.isHighlightedRed)
                     {
-                        if (true)
+                        if (CanAffordCost(GameScaling.unitPurchaseCostList[UnitType.NormalWarrior], GameState.playerActive))
                         {
-                            //RemoveCostsFromPlayer(_topCard.Costs, GameState.playerActive);
+                            RemoveCostsFromPlayer(GameScaling.unitPurchaseCostList[UnitType.NormalWarrior], GameState.playerActive);
                             PlaceUnitInTile(hexTile, UnitType.NormalWarrior); 
 
                             if (true)

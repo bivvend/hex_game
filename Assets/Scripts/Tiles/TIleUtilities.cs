@@ -259,7 +259,7 @@ namespace Scripts.Tiles
             var tUnits = typeof(bool);
 
             //If they match ALL the positive conditions then add
-            HexTileLite testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false);
+            HexTileLite testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false, new List<Units.Unit>());
             List<SearchStrategy> strategies = new();
             SearchMatchMethod method = SearchMatchMethod.All;
             //Make a tile with all these conditions
@@ -295,7 +295,7 @@ namespace Scripts.Tiles
             filteredTiles.AddRange(FilterTilesWithCriteria(tiles, testTile, strategies, method));
 
             //if they match ANY of the negative conditions then remove 
-            testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false);
+            testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false, new List<Units.Unit>());
             method = SearchMatchMethod.Any;
             strategies.Clear();
 
@@ -348,13 +348,13 @@ namespace Scripts.Tiles
             var tUnits = typeof(bool);
 
             //If they match ALL the positive conditions then add
-            HexTileLite testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false);
+            HexTileLite testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false, new List<Units.Unit>());
             List<SearchStrategy> strategies = new();
             SearchMatchMethod method = SearchMatchMethod.All;
             //Make a tile with all these conditions
             positiveConditions.ForEach(condition => {
 
-                testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false);
+                testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false, new List<Units.Unit>());
                 strategies.Clear();
 
                 if (condition.Item1.GetType() == tTerrain)
@@ -388,14 +388,14 @@ namespace Scripts.Tiles
 
 
             //if they match ANY of the negative conditions then remove 
-            testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false);
+            testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false, new List<Units.Unit>());
             method = SearchMatchMethod.Any;
             strategies.Clear();
 
             List<HexTileLite> tilesToRemove = new();
             negativeConditions.ForEach(condition => {
 
-                testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false);
+                testTile = new HexTileLite(0, 0, 0, TerrainType.Grass, new List<UtilityType>(), OwnerType.Neutral, false, false, new List<Units.Unit>());
                 strategies.Clear();
                 tilesToRemove.Clear();
 

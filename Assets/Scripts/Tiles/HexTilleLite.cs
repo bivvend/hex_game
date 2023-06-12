@@ -1,6 +1,7 @@
 
+using Scripts.Units;
 using System.Collections.Generic;
-
+using static Scripts.Units.UnitEnums;
 
 namespace Scripts.Tiles
 {
@@ -24,6 +25,8 @@ namespace Scripts.Tiles
 
         public List<UtilityType> Developments = new();
 
+        public List<Unit> Units = new();
+
 
         public OwnerType owner = OwnerType.Good;
 
@@ -33,7 +36,7 @@ namespace Scripts.Tiles
 
         public bool hasUnits = false;
 
-        public HexTileLite(int qIndex, int rIndex, int sIndex, TerrainType terrainType, List<UtilityType> developments, OwnerType owner, bool visited, bool hasUnits)
+        public HexTileLite(int qIndex, int rIndex, int sIndex, TerrainType terrainType, List<UtilityType> developments, OwnerType owner, bool visited, bool hasUnits, List<Unit> units)
         {
             this.qIndex = qIndex;
             this.rIndex = rIndex;
@@ -43,6 +46,7 @@ namespace Scripts.Tiles
             this.owner = owner;
             this.visited = visited;
             this.hasUnits = hasUnits;
+            this.Units = units;
         }
 
         /// <summary>
@@ -59,6 +63,8 @@ namespace Scripts.Tiles
             this.Developments = hexTile.Developments;
             this.TerrainType = hexTile.TerrainType;
             this.hasUnits = hexTile.Units.Count > 0;
+            this.Units = hexTile.Units;
+
         }
 
         /// <summary>
@@ -75,6 +81,7 @@ namespace Scripts.Tiles
             this.Developments = hexTile.Developments;
             this.TerrainType = hexTile.TerrainType;
             this.hasUnits = hexTile.hasUnits;
+            this.Units = hexTile.Units;
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Scripts.Units.UnitEnums;
 
 namespace Scripts
 {
@@ -62,6 +63,31 @@ namespace Scripts
             {UtilityType.SorcerersTower, new List<Cost>(){ new Cost(ResourceType.Gold, 2) } },
 
         };
+
+        public static readonly Dictionary<UnitType, List<Cost>> unitUpkeepList = new Dictionary<UnitType, List<Cost>>()
+        {
+            //These are all the same as the multipliers define the cost (a large is N normal etc)
+            {UnitType.NormalWarrior, new List<Cost>(){ new Cost(ResourceType.Gold, 1) } },
+            {UnitType.LargeWarrior, new List<Cost>(){ new Cost(ResourceType.Gold, 1) } },
+            {UnitType.VeryLargeWarrior, new List<Cost>(){ new Cost(ResourceType.Gold, 1) } },
+            {UnitType.Wizard, new List<Cost>(){ new Cost(ResourceType.Gold, 1) } },
+            {UnitType.General, new List<Cost>(){ new Cost(ResourceType.Gold, 1) } },
+            {UnitType.Hero, new List<Cost>(){ new Cost(ResourceType.Gold, 1) } },
+
+        };
+
+        public static readonly Dictionary<UnitType, List<Cost>> unitPurchaseCostList = new Dictionary<UnitType, List<Cost>>()
+        {
+            //These are all the same as the multipliers define the cost (a large is N normal etc)
+            {UnitType.NormalWarrior, new List<Cost>(){ new Cost(ResourceType.Gold, 1), new Cost(ResourceType.Food, 1), new Cost(ResourceType.Metal, 1), } },
+            {UnitType.LargeWarrior, new List<Cost>(){ new Cost(ResourceType.Gold, 1), new Cost(ResourceType.Food, 1), new Cost(ResourceType.Metal, 1), } },
+            {UnitType.VeryLargeWarrior, new List<Cost>(){ new Cost(ResourceType.Gold, 1), new Cost(ResourceType.Food, 1), new Cost(ResourceType.Metal, 1), } },
+            {UnitType.Wizard, new List<Cost>(){ new Cost(ResourceType.Gold, 5), new Cost(ResourceType.Mana, 5), } },
+            {UnitType.General, new List<Cost>(){ new Cost(ResourceType.Gold, 5), new Cost(ResourceType.Food, 5), new Cost(ResourceType.Metal, 5), } },
+            {UnitType.Hero, new List<Cost>(){ new Cost(ResourceType.Gold, 5) } },
+
+        };
+
 
         //Cost to shuffle cards
         public static readonly List<Cost> shuffleCost = new List<Cost>
