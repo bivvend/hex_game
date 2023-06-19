@@ -39,6 +39,7 @@ namespace Scripts
         public GameObject unitsSpritePrefab;
         public GameObject heroSpritePrefab;
         public GameObject developmentPrefab;
+        public GameObject unitCountPrefab;
         public int mapRadius;
 
         [HideInInspector]
@@ -76,6 +77,7 @@ namespace Scripts
                             t.developmentPrefab = developmentPrefab;
                             t.unitsSpritePrefab = unitsSpritePrefab;
                             t.heroSpritePrefab = unitsSpritePrefab;
+                            t.unitCountPrefab = unitCountPrefab;
                             t.boardController = this;
 
                             TerrainType randomType = (TerrainType)values.GetValue(random.Next(values.Length));
@@ -577,11 +579,22 @@ namespace Scripts
 
 
             //Setup cards
-            for (int i = 0; i < GameScaling.numberOfCards; i++)
+            developmentCards.AddRange(GameScaling.BuildNewDeck());
+            //ShuffleCards
+            //Shuffle the cards
+            System.Random rng = new System.Random();
+            int n = developmentCards.Count;
+            while (n > 1)
             {
-                //Get a development card
-                developmentCards.Add(GameScaling.GetRandomDevelopmentCard());
+                n--;
+                int k = rng.Next(n + 1);
+                var value = developmentCards[k];
+                developmentCards[k] = developmentCards[n];
+                developmentCards[n] = value;
             }
+
+            //Display the new top card
+            ChangeTopCardDisplay(withRemoval: false);
 
 
         }
@@ -661,7 +674,7 @@ namespace Scripts
                 }
                 else
                 {
-                    if (true)
+                    if (CanAffordCost(GameScaling.unitPurchaseCostList[UnitType.NormalWarrior], GameState.playerActive))
                     {
 
                         GameState.SetInteractionState(GameStateEnums.InteractionState.PlacingUnit);
@@ -822,7 +835,7 @@ namespace Scripts
                             RemoveCostsFromPlayer(GameScaling.unitPurchaseCostList[UnitType.NormalWarrior], GameState.playerActive);
                             PlaceUnitInTile(hexTile, UnitType.NormalWarrior); 
 
-                            if (true)
+                            if (CanAffordCost(GameScaling.unitPurchaseCostList[UnitType.NormalWarrior], GameState.playerActive))
                             {
                                 HighlightPlayersTiles(GameState.PlayerActiveToOwnerType(), HighlightColor.Red);
                             }

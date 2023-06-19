@@ -3,6 +3,7 @@ using Scripts.Tiles;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Scripts.Units.UnitEnums;
 
@@ -103,8 +104,20 @@ namespace Scripts
         //Cost of troops
 
 
-        //Card setip
-        public static int numberOfCards = 51;  //One removed at start
+        //Card setup
+        public static Dictionary<UtilityType, int> intialDeckBalance = new Dictionary<UtilityType, int>
+        {
+            {UtilityType.Capital, 0},
+            {UtilityType.Mine, 30},
+            {UtilityType.Fort, 10},
+            {UtilityType.Town, 30},
+            {UtilityType.Farm, 30},
+            {UtilityType.QuestSite, 4},
+            {UtilityType.SorcerersTower, 4},
+
+        };
+
+        public static int numberOfCards => GetNumberOfCards();
 
 
         //Initial balances
@@ -124,6 +137,42 @@ namespace Scripts
 
             return new DevelopmentCard(CardType.Development, randomType, developmentPurchaseCostList[randomType], random.Next(1,5));
 
+        }
+
+        public static DevelopmentCard GetNewDevelopmentCard(UtilityType utilityType)
+        {
+            System.Random random = new System.Random();
+
+            return new DevelopmentCard(CardType.Development, utilityType, developmentPurchaseCostList[utilityType], random.Next(1, 5));
+
+        }
+
+
+        private static int GetNumberOfCards()
+        {
+            int cardCount = 0;
+            intialDeckBalance.Keys.ToList().ForEach((k) =>
+            {
+                cardCount+= intialDeckBalance[k];
+            });
+
+            return cardCount;
+        }
+
+
+        public static List<DevelopmentCard> BuildNewDeck()
+        {
+
+            List<DevelopmentCard> cards = new List<DevelopmentCard>();
+            intialDeckBalance.Keys.ToList().ForEach((k) =>
+            {
+                for(int i = 0 ; i< intialDeckBalance[k]; i++)
+                {
+                    cards.Add(GetNewDevelopmentCard(k));
+                }
+            });
+
+            return cards;
         }
 
     }

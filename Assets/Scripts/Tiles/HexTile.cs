@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using TMPro;
+using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -24,12 +26,15 @@ namespace Scripts.Tiles
         public GameObject developmentPrefab;
         public GameObject unitsSpritePrefab;
         public GameObject heroSpritePrefab;
+        public GameObject unitCountPrefab;
 
         private GameObject _tileSprite;
         private GameObject _edgeSprite;
         private GameObject _developmentSprite;
         private GameObject _unitSprite;
         private GameObject _heroSprite;
+        private GameObject _unitCountSprite;
+        
 
         public BoardController boardController;
 
@@ -216,6 +221,10 @@ namespace Scripts.Tiles
 
             _unitSprite = Instantiate(unitsSpritePrefab, new Vector3(renderPosX + 0.3f, renderPosY+ 0.3f, -0.1f), Quaternion.identity);
 
+            _unitCountSprite = Instantiate(unitCountPrefab, new Vector3(renderPosX + 0.5f, renderPosY - 0.6f, -0.2f), Quaternion.identity);
+            _unitCountSprite.GetComponent<TextMesh>().text = "";
+            _unitCountSprite.transform.localScale = new Vector3(0.02f, 0.02f, 1.0f);
+
 
         }
 
@@ -361,10 +370,12 @@ namespace Scripts.Tiles
                 {
                     _unitSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel(currentOwner, "Warrior");
 
+                    _unitCountSprite.GetComponent<TextMesh>().text = Units.Count.ToString(); 
                 }
                 else
                 {
                     _unitSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel("None", "None");
+                    _unitCountSprite.GetComponent<TextMesh>().text = "";
                 }
 
                 
