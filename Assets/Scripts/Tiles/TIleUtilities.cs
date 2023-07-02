@@ -231,6 +231,7 @@ namespace Scripts.Tiles
         }
 
 
+
         public static bool HasSameIndiciesSimple(HexTileLite tile1, int qIndex, int rIndex, int sIndex)
         {
             return (tile1.qIndex == qIndex && tile1.rIndex == rIndex && tile1.sIndex == sIndex);

@@ -20,6 +20,7 @@ namespace Scripts
             MovingHero = 5,
             SelectTile = 6,  //Default state during your turn  (doing nothing) but can click on tile for info
             MovingWizard = 7,
+            ResolvingBattles = 8,
         }
 
         public enum SelectionState

@@ -107,6 +107,9 @@ namespace Scripts.Tiles
         private bool _developmentsChanged = true;
         private bool _unitsChanged = true;
 
+        private PointF _unitsRenderOffset = new PointF(0.0f, 0.0f);   //Used for animation
+
+
         /// <summary>
         /// Returns the stength of the square based on the Units present.
         /// </summary>
@@ -122,6 +125,34 @@ namespace Scripts.Tiles
 
             return numTroops;
 
+        }
+
+        /// <summary>
+        /// Sets the sprite offset to be a given fraction (0...1) of the distance between the tiles with given indicies.
+        /// </summary>
+        /// <param name="qIndex1"></param>
+        /// <param name="rIndex1"></param>
+        /// <param name="qIndex2"></param>
+        /// <param name="rIndex2"></param>
+        /// <param name="fraction"></param>
+        public void SetSpriteOffset(int qIndex1, int rIndex1, int qIndex2, int rIndex2, float fraction)
+        {
+            PointF pos1 = TIleUtilities.convertHexIndiciesToCartesianFlatTop(qIndex1, rIndex1);
+            float posX1 = (_size / 2.0f) * pos1.X + renderOffsetX;
+            float posY1 = (_size / 2.0f) * pos1.Y + renderOffsetY;
+
+            PointF pos2 = TIleUtilities.convertHexIndiciesToCartesianFlatTop(qIndex2, rIndex2);
+            float posX2 = (_size / 2.0f) * pos2.X + renderOffsetX;
+            float posY2 = (_size / 2.0f) * pos2.Y + renderOffsetY;
+
+            float dx = fraction * (posX2 - posX1);
+            float dy = fraction * (posY2 - posY1);
+
+            _unitsRenderOffset.X = dx;
+            _unitsRenderOffset.Y = dy;
+
+
+            _unitsChanged = true;
         }
 
 
@@ -369,6 +400,8 @@ namespace Scripts.Tiles
                 if (hasUnits)
                 {
                     _unitSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel(currentOwner, "Warrior");
+                    _unitSprite.transform.position = new Vector3(renderPosX + 0.3f + _unitsRenderOffset.X, renderPosY + 0.3f + _unitsRenderOffset.X, -0.1f);
+                    
 
                     _unitCountSprite.GetComponent<TextMesh>().text = Units.Count.ToString(); 
                 }
@@ -389,6 +422,9 @@ namespace Scripts.Tiles
         {
             owner = ownerTypeIn;
             _ownershipChanged = true;
+            _developmentsChanged = true;
+            _unitsChanged = true;
+        
 
         }
 
@@ -396,6 +432,26 @@ namespace Scripts.Tiles
         public void AddTroops(List<Unit> newUnitList)
         {
             Units.AddRange(newUnitList);
+            _unitsChanged = true;
+
+        }
+
+        public void RemoveTroops(List<int> indices)
+        {
+            indices.ForEach((i) =>
+            {
+                if(Units.Count > i)
+                {
+                    Units.RemoveAt(i);  
+                }
+            });
+            _unitsChanged = true;
+
+        }
+
+        public void RemoveAllTroops()
+        {
+            Units.Clear();
             _unitsChanged = true;
 
         }

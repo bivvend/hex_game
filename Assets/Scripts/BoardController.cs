@@ -17,6 +17,8 @@ using Scripts.Units;
 using static Scripts.Units.UnitEnums;
 using Unit = Scripts.Units.Unit;
 using Wizard = Scripts.Units.Wizard;
+using System.Threading.Tasks;
+using UnityEditor;
 
 namespace Scripts
 {
@@ -761,9 +763,11 @@ namespace Scripts
             {
                 AddIncomes();
                 DeselectAllTiles();
-                GameState.SetPlayerActive(GetNextPlayer());
-                GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
-                ChangeTopCardDisplay(withRemoval:false);
+                GameState.SetInteractionState(GameStateEnums.InteractionState.ResolvingBattles);
+                RunBattles();
+                SwitchToNextPlayer();
+
+               
             }
             else
             {
@@ -771,6 +775,131 @@ namespace Scripts
 
             }
         }
+
+        private async void RunBattles()
+        {
+            Debug.Log($"Starting battles for player {GameState.playerActive}");
+            //Get all tiles with units of the current player
+            List<HexTileLite> tilesWithUnits = new();
+            var liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+
+            List<(object, object)> positiveConditions = new();
+            List<(object, object)> negativeConditions = new();
+            bool hasUnits = true;
+            positiveConditions.Add((hasUnits, hasUnits));
+            positiveConditions.Add((GameState.PlayerActiveToOwnerType(), GameState.PlayerActiveToOwnerType()));
+            //Get all tiles of that owner
+            tilesWithUnits = TIleUtilities.FilterTilesByListOfGenericConditions(liteList, positiveConditions, negativeConditions);
+
+            //For each tile get neighbours that are enemy tiles
+            tilesWithUnits.ForEach(async (t) =>
+            {
+
+                var targetTile = new HexTileLite(t);
+                if(t.owner == OwnerType.Good)
+                {
+                    targetTile.owner = OwnerType.Evil;
+                }
+                else
+                {
+                    targetTile.owner = OwnerType.Good;
+                }
+                var neighbours = TIleUtilities.GetNeighboursWithCriteria(liteList, targetTile, new List<SearchStrategy> { SearchStrategy.Owner}, SearchMatchMethod.All);
+
+                var attackedTile = new HexTileLite(t);
+                bool willAttack = false;
+                if(neighbours.Count > 0)
+                {
+                    //Need to pick one based on "Wind of war"
+                    attackedTile = neighbours.First();
+                    if (t.Units.Count > attackedTile.Units.Count)
+                    {
+                        willAttack = true;
+                    }
+
+                }
+                else 
+                {
+                    attackedTile = neighbours.First();
+                    if (t.Units.Count > attackedTile.Units.Count)
+                    {
+                        willAttack = true;
+                    }
+                }
+                if(willAttack)
+                {
+                    //Get the underlying tiles
+                    GameObject attackingObject = GetHexTileGameObjectFromHexTileLite(t);
+                    HexTile attackingHexTile = attackingObject.GetComponent<HexTile>();
+
+                    GameObject attackedObject = GetHexTileGameObjectFromHexTileLite(attackedTile);
+                    HexTile attackedHexTile = attackedObject.GetComponent<HexTile>();
+
+                    //calc damage
+                    int damage = attackedHexTile.Units.Count;
+
+                    //Take over attackedTile
+                    //Move the unit
+
+                    GameState.SetAnimationState(CurrentAnimationState.MovingUnit);
+                    MoveAllUnitsAnimation(attackingHexTile, attackedHexTile);
+                    GameState.SetAnimationState(CurrentAnimationState.None);
+
+                    attackedHexTile.RemoveAllTroops();
+                    
+                    //Should change this to a random damage model
+                    for(int i =0; i< damage; i++)
+                    {
+                        attackingHexTile.RemoveTroops(new List<int> {0});
+                    }
+
+                    attackedHexTile.AddTroops(attackingHexTile.Units);
+                    attackingHexTile.RemoveAllTroops();
+
+                    attackedHexTile.ChangeOwnerShip(GameState.PlayerActiveToOwnerType());
+                    attackingHexTile.SetSpriteOffset(attackingHexTile.qIndex, attackingHexTile.rIndex, attackedHexTile.qIndex, attackedHexTile.rIndex, 0.0f);
+
+                    await Task.Delay(500);
+
+                }
+
+                //Need to refresh litelist 
+                liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+
+            });
+
+
+            await Task.Delay(2000);
+            Debug.Log("Battles finished.");
+            GameState.SetInteractionState(GameStateEnums.InteractionState.None);
+
+        }
+
+        private async void SwitchToNextPlayer()
+        {
+            //Allow other states to finish 
+            while(GameState.interactionState != InteractionState.None || GameState.animationState != CurrentAnimationState.None)
+            {
+                await Task.Delay(500);
+            }
+
+            GameState.SetPlayerActive(GetNextPlayer());
+            GameState.SetInteractionState(GameStateEnums.InteractionState.SelectTile);
+            ChangeTopCardDisplay(withRemoval: false);
+
+        }
+
+        private async void MoveAllUnitsAnimation(HexTile startTile, HexTile desinationTile)
+        {
+            for (int i = 0; i < 60; i++)
+            {
+                startTile.SetSpriteOffset(startTile.qIndex, startTile.rIndex, desinationTile.qIndex, desinationTile.rIndex, (float)i / 60.0f);
+                await Task.Delay(3000 / 60);
+            }
+            
+        }
+
+        
 
         private GameStateEnums.PlayerActive GetNextPlayer()
         {
@@ -1225,6 +1354,28 @@ namespace Scripts
 
             });
 
+        }
+
+        public GameObject GetHexTileGameObjectFromHexTileLite(HexTileLite tile)
+        {
+
+            GameObject gameObject = new GameObject();
+            tiles.ForEach((t) =>
+            {
+                HexTile hT = t.GetComponent<HexTile>();
+                if(tile.qIndex == hT.qIndex && tile.rIndex == hT.rIndex && tile.sIndex == hT.sIndex)
+                {
+                    gameObject = t;
+                }
+            });
+
+            if(gameObject.GetComponent<HexTile>() == null)
+            {
+                throw new Exception("Failed to find correct tile");
+
+            }
+
+            return gameObject;
         }
 
         public void HighlightTilesBasedOnGenericFilter<T>( List<(T, object)> positiveConditions, List<(T, object)> negativeConditions, HighlightColor colour, bool containsRepeatedTypes)

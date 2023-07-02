@@ -41,7 +41,7 @@ public class ButtonManager : MonoBehaviour
     public void OnEndTurnButtonClicked()
     {
 
-        boardController.EndTurnButtonClicked();
+         boardController.EndTurnButtonClicked();
     }
 
     public void OnStartGameButtonClicked()
