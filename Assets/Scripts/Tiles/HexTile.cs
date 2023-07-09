@@ -250,9 +250,9 @@ namespace Scripts.Tiles
 
             _developmentSprite = Instantiate(developmentPrefab, new Vector3(renderPosX, renderPosY, -0.01f), Quaternion.identity);
 
-            _unitSprite = Instantiate(unitsSpritePrefab, new Vector3(renderPosX + 0.3f, renderPosY+ 0.3f, -0.1f), Quaternion.identity);
+            _unitSprite = Instantiate(unitsSpritePrefab, new Vector3(renderPosX + 0.3f, renderPosY+ 0.3f, -0.5f), Quaternion.identity);
 
-            _unitCountSprite = Instantiate(unitCountPrefab, new Vector3(renderPosX + 0.5f, renderPosY - 0.6f, -0.2f), Quaternion.identity);
+            _unitCountSprite = Instantiate(unitCountPrefab, new Vector3(renderPosX + 0.5f, renderPosY - 0.6f, -0.8f), Quaternion.identity);
             _unitCountSprite.GetComponent<TextMesh>().text = "";
             _unitCountSprite.transform.localScale = new Vector3(0.02f, 0.02f, 1.0f);
 
@@ -400,7 +400,7 @@ namespace Scripts.Tiles
                 if (hasUnits)
                 {
                     _unitSprite.GetComponent<SpriteResolver>().SetCategoryAndLabel(currentOwner, "Warrior");
-                    _unitSprite.transform.position = new Vector3(renderPosX + 0.3f + _unitsRenderOffset.X, renderPosY + 0.3f + _unitsRenderOffset.X, -0.1f);
+                    _unitSprite.transform.position = new Vector3(renderPosX + 0.3f + _unitsRenderOffset.X, renderPosY + 0.3f + _unitsRenderOffset.Y, -0.5f);
                     
 
                     _unitCountSprite.GetComponent<TextMesh>().text = Units.Count.ToString(); 

@@ -122,10 +122,10 @@ namespace Scripts
 
         //Initial balances
         public static List<Cost> initialBalances = new List<Cost>() {
-            new Cost(ResourceType.Food, 4),
-            new Cost(ResourceType.Gold, 3),
-            new Cost(ResourceType.Metal, 2),
-            new Cost(ResourceType.Mana, 1)
+            new Cost(ResourceType.Food, 400),
+            new Cost(ResourceType.Gold, 400),
+            new Cost(ResourceType.Metal, 400),
+            new Cost(ResourceType.Mana, 400)
         };
         
 

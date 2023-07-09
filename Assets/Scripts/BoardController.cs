@@ -794,7 +794,12 @@ namespace Scripts
             //For each tile get neighbours that are enemy tiles
             tilesWithUnits.ForEach(async (t) =>
             {
-
+                while(GameState.animationState != CurrentAnimationState.None)
+                {
+                    await Task.Delay(500);
+                    Debug.Log("Waiting for a move");
+                }
+                
                 var targetTile = new HexTileLite(t);
                 if(t.owner == OwnerType.Good)
                 {
@@ -842,7 +847,7 @@ namespace Scripts
                     //Move the unit
 
                     GameState.SetAnimationState(CurrentAnimationState.MovingUnit);
-                    MoveAllUnitsAnimation(attackingHexTile, attackedHexTile);
+                    await MoveAllUnitsAnimation(attackingHexTile, attackedHexTile);
                     GameState.SetAnimationState(CurrentAnimationState.None);
 
                     attackedHexTile.RemoveAllTroops();
@@ -862,14 +867,13 @@ namespace Scripts
                     await Task.Delay(500);
 
                 }
+                await Task.Delay(500);
 
                 //Need to refresh litelist 
-                liteList = tiles.Select((t) => new HexTileLite(t.GetComponent<HexTile>())).ToList();
+                liteList = tiles.Select((a) => new HexTileLite(a.GetComponent<HexTile>())).ToList();
 
             });
 
-
-            await Task.Delay(2000);
             Debug.Log("Battles finished.");
             GameState.SetInteractionState(GameStateEnums.InteractionState.None);
 
@@ -889,12 +893,12 @@ namespace Scripts
 
         }
 
-        private async void MoveAllUnitsAnimation(HexTile startTile, HexTile desinationTile)
+        private async Task MoveAllUnitsAnimation(HexTile startTile, HexTile desinationTile)
         {
             for (int i = 0; i < 60; i++)
             {
                 startTile.SetSpriteOffset(startTile.qIndex, startTile.rIndex, desinationTile.qIndex, desinationTile.rIndex, (float)i / 60.0f);
-                await Task.Delay(3000 / 60);
+                await Task.Delay(1000 / 60);
             }
             
         }
